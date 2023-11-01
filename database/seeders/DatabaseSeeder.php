@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Admin',
             'email' => "admin@barangayugong.com",
             'password' => Hash::make("admin"),
-            'user_role' => 3
+            'user_role' => 1
         ]);
     }
 }

@@ -6,6 +6,7 @@ import CustomButton from "../../components/CustomButton";
 import { toast } from "react-toastify";
 import CustomToast from "../../components/CustomToast";
 import { api } from "../../config/api";
+import logo from "../../../../public/images/barnagayugong.png";
 
 const RegisterPage = () => {
     const [loading, setLoading] = useState(false);
@@ -60,7 +61,7 @@ const RegisterPage = () => {
             <CustomToast />
             <div className="grid grid-cols-1 lg:grid-cols-2 h-screen px-24">
                 <div className="hidden lg:col-span-1 lg:flex lg:justify-center lg:items-center">
-                    <Typography fontSize={30}>test</Typography>
+                    <img src={logo} />
                 </div>
                 <div className="col-span-1 flex flex-col justify-center items-center">
                     <div className="p-10 border-2 border-sky-600 rounded bg-white">

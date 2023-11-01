@@ -11,4 +11,16 @@ class ServicesController extends Controller
     {
         return view('features.Services.Services');
     }
+    public function documentSubmission()
+    {
+        return view('features.Services.DocumentSubmission');
+    }
+    public function blotterReport()
+    {
+        return view('features.Services.BlotterReport');
+    }
+    public function reservation()
+    {
+        return view("features.Services.Reservation");
+    }
 }

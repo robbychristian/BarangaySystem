@@ -6,6 +6,7 @@ import CustomTextInput from "../../components/CustomTextInput";
 import CustomButton from "../../components/CustomButton";
 import { toast } from "react-toastify";
 import { api } from "../../config/api";
+import logo from "../../../../public/images/barnagayugong.png";
 
 const LoginPage = () => {
     const [loading, setLoading] = useState(false);
@@ -87,7 +88,9 @@ const LoginPage = () => {
                         <Typography variant="body1">
                             Don't have an account yet?{" "}
                             <span className="underline cursor-pointer">
-                                <a href="/register">Register here!</a>
+                                <a href="/register" className="text-sky-600">
+                                    Register here!
+                                </a>
                             </span>
                         </Typography>
                         <CustomButton
@@ -101,7 +104,7 @@ const LoginPage = () => {
                     </div>
                 </div>
                 <div className="hidden lg:col-span-1 lg:flex lg:justify-center lg:items-center">
-                    <Typography fontSize={30}>Test</Typography>
+                    <img src={logo} />
                 </div>
             </div>
         </div>

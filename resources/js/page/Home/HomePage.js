@@ -1,5 +1,5 @@
 import { Card, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import CustomCarousel from "../../components/CustomCarousel";
 import {
@@ -12,6 +12,7 @@ import {
     Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import { api } from "../../config/api";
 
 ChartJS.register(
     CategoryScale,
@@ -22,6 +23,7 @@ ChartJS.register(
     Legend
 );
 const HomePage = () => {
+    const [announcement, setAnnouncement] = useState({});
     const labels = ["January", "February", "March", "April", "May", "June"];
     const sampleData = {
         labels,
@@ -33,9 +35,43 @@ const HomePage = () => {
             },
         ],
     };
+
+    useEffect(() => {
+        api.get("announcements/getallannouncements")
+            .then((response) => {
+                setAnnouncement(response.data);
+            })
+            .catch((err) => {
+                console.log(err.response);
+            });
+    }, []);
+
     return (
         <div className="px-10 py-4">
-            <CustomCarousel />
+            <Card
+                style={{
+                    paddingLeft: 15,
+                    paddingRight: 15,
+                    paddingTop: 8,
+                    paddingBottom: 8,
+                }}
+                variant="outlined"
+            >
+                <Typography
+                    variant="h4"
+                    fontWeight={`700`}
+                    textAlign={`center`}
+                >
+                    Announcements
+                </Typography>
+                <Typography variant="h6" fontWeight={"bold"}>
+                    {announcement && announcement.announcement_title}
+                </Typography>
+                <Typography variant="body1">
+                    {announcement && announcement.announcement_description}
+                </Typography>
+                <div className="flex justify-center items-center"></div>
+            </Card>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div className="col-span-1">
                     <Bar
