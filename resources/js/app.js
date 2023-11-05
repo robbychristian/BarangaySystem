@@ -22,11 +22,13 @@ require("./page/Services/ServicesPage");
 require("./page/Services/DocumentSubmissionPage");
 require("./page/Services/BlotterReportPage");
 require("./page/Services/ReservationPage");
+require("./page/Services/TransactionsPage");
 
 require("./page/Announcements/AnnouncementPage");
 require("./page/Announcements/BarangayNews/BarangayNewsPage");
 require("./page/Announcements/CreateAnnouncementPage");
 require("./page/Announcements/UpcomingEventsPage");
+require("./page/Announcements/PastEventsPage");
 
 require("./page/Reports/ReportsPage");
 require("./page/Reports/BarangayReports");

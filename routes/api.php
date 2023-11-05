@@ -26,10 +26,12 @@ Route::get('/services/getalldocuments', [ServicesController::class, 'getAllDocum
 Route::post('/services/createdocument', [ServicesController::class, 'addDocument']);
 Route::post('/services/createblotter', [ServicesController::class, 'addBlotterReport']);
 Route::post('/services/createreservation', [ServicesController::class, 'addReservation']);
+Route::post('/services/getallunpaidtransactions', [ServicesController::class, 'getAllUnpaidTransactions']);
 
 Route::get("/announcements/getallannouncements", [AnnouncementsController::class, 'getAllAnnouncements']);
 Route::get("/announcements/getallnews", [AnnouncementsController::class, 'getAllNews']);
 Route::get("/announcements/getallevents", [AnnouncementsController::class, 'getAllEvents']);
+Route::get("/announcements/getpastevents", [AnnouncementsController::class, 'getPastEvents']);
 Route::post('/announcements/createannouncement', [AnnouncementsController::class, 'addAnnouncement']);
 Route::post('/announcements/createnews', [AnnouncementsController::class, 'addNews']);
 Route::post('/announcements/createevent', [AnnouncementsController::class, 'addEvent']);

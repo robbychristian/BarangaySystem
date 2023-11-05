@@ -17,6 +17,7 @@ use App\Models\ReservationFormAdditionalInfo;
 use App\Models\ReservationFormPersonalInfo;
 use App\Models\ReservationFormRequest;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class ServicesController extends Controller
@@ -146,5 +147,12 @@ class ServicesController extends Controller
     public function getAllDocuments()
     {
         return DocumentSubmission::with('personalInfo')->with('additionalInfo')->with('paymentInfo')->get();
+    }
+
+    public function getAllUnpaidTransactions()
+    {
+        return Payments::with(['ownedBy.user' => function ($query) {
+            $query->get();
+        }])->where('is_paid', 0)->get();
     }
 }

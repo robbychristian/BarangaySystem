@@ -23,4 +23,8 @@ class ServicesController extends Controller
     {
         return view("features.Services.Reservation");
     }
+    public function transactions()
+    {
+        return view("features.Services.Transactions");
+    }
 }

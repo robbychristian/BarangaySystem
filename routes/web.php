@@ -28,11 +28,13 @@ Route::get('/services', [ServicesController::class, "index"]);
 Route::get('/services/documentsubmission', [ServicesController::class, "documentsubmission"]);
 Route::get('/services/blotterreport', [ServicesController::class, "blotterReport"]);
 Route::get('/services/reservation', [ServicesController::class, "reservation"]);
+Route::get('/services/transactions', [ServicesController::class, "transactions"]);
 
 Route::get('/announcements', [AnnouncementsController::class, 'index']);
 Route::get('/announcements/barangaynews', [AnnouncementsController::class, 'barangayNews']);
 Route::get('/announcements/createannouncement', [AnnouncementsController::class, 'createAnnouncement']);
 Route::get('/announcements/upcomingevents', [AnnouncementsController::class, 'upcomingEvents']);
+Route::get('/announcements/pastevents', [AnnouncementsController::class, 'pastEvents']);
 
 Route::get('/reports', [ReportsController::class, 'index']);
 Route::get('/reports/barangayreports', [ReportsController::class, 'barangayReports']);

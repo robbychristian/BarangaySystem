@@ -34,6 +34,19 @@ class AnnouncementsController extends Controller
         return $availableEvents;
     }
 
+    public function getPastEvents()
+    {
+        $dateToday = Carbon::now();
+        $events = Events::all();
+        $availableEvents = [];
+        foreach ($events as $event) {
+            if (Carbon::now()->greaterThan($event->event_start)) {
+                array_push($availableEvents, $event);
+            }
+        }
+        return $availableEvents;
+    }
+
     public function addAnnouncement(Request $request)
     {
         Announcements::create([

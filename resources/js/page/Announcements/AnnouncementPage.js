@@ -50,6 +50,11 @@ const AnnouncementPage = () => {
                                 sx={{ fontSize: 180, color: "#fff" }}
                             />
                         }
+                        onClick={() => {
+                            window.location.replace(
+                                "/announcements/pastevents"
+                            );
+                        }}
                     />
                 </div>
                 <div className="col-span-1">

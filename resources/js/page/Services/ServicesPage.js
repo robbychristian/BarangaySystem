@@ -73,6 +73,9 @@ const ServicesPage = () => {
                                 sx={{ fontSize: 180, color: "#fff" }}
                             />
                         }
+                        onClick={() => {
+                            window.location.replace("/services/transactions");
+                        }}
                     />
                 </div>
                 <div className="col-span-1">

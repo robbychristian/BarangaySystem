@@ -23,4 +23,8 @@ class AnnouncementsController extends Controller
     {
         return view('features.Announcements.UpcomingEvents');
     }
+    public function pastEvents()
+    {
+        return view('features.Announcements.PastEvents');
+    }
 }
