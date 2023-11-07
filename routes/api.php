@@ -3,6 +3,7 @@
 use App\Http\Controllers\Crud\AnnouncementsController;
 use App\Http\Controllers\Crud\ReportsController;
 use App\Http\Controllers\Crud\ServicesController;
+use App\Http\Controllers\Crud\UserManagement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -37,5 +38,7 @@ Route::post('/announcements/createnews', [AnnouncementsController::class, 'addNe
 Route::post('/announcements/createevent', [AnnouncementsController::class, 'addEvent']);
 
 Route::get('/reports/getallblotterreports', [ReportsController::class, 'getAllBlotterReports']);
+
+Route::get('/usermanagement/getallusers', [UserManagement::class, 'getAllUsers']);
 
 Auth::routes();

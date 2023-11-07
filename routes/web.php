@@ -3,6 +3,7 @@
 use App\Http\Controllers\Features\AnnouncementsController;
 use App\Http\Controllers\Features\ReportsController;
 use App\Http\Controllers\Features\ServicesController;
+use App\Http\Controllers\Features\UserManagement;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,3 +41,5 @@ Route::get('/reports', [ReportsController::class, 'index']);
 Route::get('/reports/barangayreports', [ReportsController::class, 'barangayReports']);
 Route::get('/reports/residentrecords', [ReportsController::class, 'residentRecords']);
 Route::get('/reports/incidentreports', [ReportsController::class, 'incidentReports']);
+
+Route::get('/usermanagement', [UserManagement::class, 'index']);
