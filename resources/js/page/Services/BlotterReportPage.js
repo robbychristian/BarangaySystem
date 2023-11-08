@@ -150,6 +150,7 @@ const BlotterReportPage = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 my-5">
                         <div className="col-span-1">
                             <CustomAutoComplete
+                                label={`Name`}
                                 value={reportingName.label}
                                 onChange={(e, value) => {
                                     setReportingName(value);

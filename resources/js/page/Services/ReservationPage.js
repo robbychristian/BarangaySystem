@@ -123,6 +123,7 @@ const ReservationPage = () => {
                                 onChangeValue={(e) => setName(e.target.value)}
                             /> */}
                             <CustomAutoComplete
+                                label={`Name`}
                                 value={name.label}
                                 onChange={(e, value) => setName(value)}
                                 options={allUsers}

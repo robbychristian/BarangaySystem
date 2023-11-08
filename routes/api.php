@@ -40,5 +40,8 @@ Route::post('/announcements/createevent', [AnnouncementsController::class, 'addE
 Route::get('/reports/getallblotterreports', [ReportsController::class, 'getAllBlotterReports']);
 
 Route::get('/usermanagement/getallusers', [UserManagement::class, 'getAllUsers']);
+Route::post('/usermanagement/createuser', [UserManagement::class, 'addUser']);
+Route::post('/usermanagement/promoteuser', [UserManagement::class, 'promoteUser']);
+Route::post('/usermanagement/demoteuser', [UserManagement::class, 'demoteUser']);
 
 Auth::routes();

@@ -11,4 +11,9 @@ class UserManagement extends Controller
     {
         return view('features.UserManagement.UserManagement');
     }
+
+    public function addUser()
+    {
+        return view('features.UserManagement.AddUser');
+    }
 }

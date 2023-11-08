@@ -35,4 +35,5 @@ require("./page/Reports/BarangayReports");
 require("./page/Reports/ResidentRecords");
 require("./page/Reports/IncidentReports");
 
-require("./page/UserManagement/UserManagementPage")
+require("./page/UserManagement/UserManagementPage");
+require("./page/UserManagement/AddUserPage");

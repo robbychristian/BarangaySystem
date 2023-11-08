@@ -43,3 +43,4 @@ Route::get('/reports/residentrecords', [ReportsController::class, 'residentRecor
 Route::get('/reports/incidentreports', [ReportsController::class, 'incidentReports']);
 
 Route::get('/usermanagement', [UserManagement::class, 'index']);
+Route::get('/usermanagement/adduser', [UserManagement::class, 'addUser']);

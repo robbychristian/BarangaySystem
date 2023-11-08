@@ -5,18 +5,15 @@ import CustomBackTitle from "../../navigation/CustomBackTitle";
 import { DataGrid } from "@mui/x-data-grid";
 import { data } from "autoprefixer";
 import { api } from "../../config/api";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import moment from "moment";
+import { toast } from "react-toastify";
+import CustomToast from "../../components/CustomToast";
 
-const columns = [
-    { field: "id", headerName: "ID", width: 90 },
-    {
-        field: "name",
-        headerName: "Name",
-        width: 150,
-        editable: true,
-    },
-];
 const UserManagementPage = () => {
     const [data, setData] = useState([]);
+    const [count, setCount] = useState(0);
     useEffect(() => {
         api.get("usermanagement/getallusers")
             .then((response) => {
@@ -26,10 +23,121 @@ const UserManagementPage = () => {
             .catch((err) => {
                 console.log(err.response);
             });
-    }, []);
+    }, [count]);
+
+    const columns = [
+        { field: "id", headerName: "ID", width: 90 },
+        {
+            field: "name",
+            headerName: "Name",
+            width: 150,
+            editable: true,
+        },
+        {
+            field: "user_role",
+            headerName: "User Role",
+            width: 150,
+            editable: true,
+            renderCell: (cellValue) => {
+                return cellValue.value == 1
+                    ? "Admin"
+                    : cellValue.value == 2
+                    ? "Barangay Official"
+                    : cellValue.value == 3
+                    ? "Barangay Staff"
+                    : "Resident";
+            },
+        },
+        {
+            field: "created_at",
+            headerName: "Date Joined",
+            width: 160,
+            editable: true,
+            renderCell: (cellValue) => {
+                console.log(cellValue);
+                if (cellValue.value) {
+                    return moment(cellValue.value).format("LL");
+                }
+                return "";
+            },
+        },
+        {
+            field: "action",
+            headerName: "Actions",
+            width: 160,
+            editable: true,
+            renderCell: (cellValue) => {
+                if (cellValue.row.user_role != 1) {
+                    return (
+                        <>
+                            <Button
+                                onClick={() => {
+                                    if (cellValue.row.user_role <= 2) {
+                                        toast(
+                                            "User already a Barangay Official",
+                                            {
+                                                type: "info",
+                                            }
+                                        );
+                                    } else {
+                                        api.post("usermanagement/promoteuser", {
+                                            id: cellValue.row.id,
+                                            user_role: cellValue.row.user_role,
+                                        })
+                                            .then((response) => {
+                                                console.log(response.data);
+                                                setCount(count + 1);
+                                            })
+                                            .catch((err) => {
+                                                console.log(err.response);
+                                            });
+                                    }
+                                }}
+                            >
+                                <ArrowUpwardIcon className="text-lime-600" />
+                            </Button>
+                            <Button
+                                onClick={() => {
+                                    if (cellValue.row.user_role >= 4) {
+                                        toast("User already a Resident", {
+                                            type: "info",
+                                        });
+                                    } else {
+                                        api.post("usermanagement/demoteuser", {
+                                            id: cellValue.row.id,
+                                            user_role: cellValue.row.user_role,
+                                        })
+                                            .then((response) => {
+                                                console.log(response.data);
+                                                setCount(count + 1);
+                                            })
+                                            .catch((err) => {
+                                                console.log(err.response);
+                                            });
+                                    }
+                                }}
+                            >
+                                <ArrowDownwardIcon className="text-red-500" />
+                            </Button>
+                        </>
+                    );
+                }
+            },
+        },
+    ];
+
     return (
         <div className="px-10 py-4">
-            <CustomBackTitle title={"User Management"} url={"/home"} />
+            <CustomToast />
+            <CustomBackTitle
+                title={"User Management"}
+                url={"/home"}
+                hasButton
+                label={`Add User`}
+                onClick={() =>
+                    window.location.replace("/usermanagement/adduser")
+                }
+            />
             <div className="my-5">
                 <DataGrid
                     rows={data}
