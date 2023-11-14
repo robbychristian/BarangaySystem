@@ -13,6 +13,11 @@ class AnnouncementsController extends Controller
 {
     public function getAllAnnouncements()
     {
+        return Announcements::get();
+    }
+
+    public function getLatestAnnouncement()
+    {
         return Announcements::latest()->first();
     }
 

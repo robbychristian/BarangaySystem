@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Crud\AnnouncementsController;
 use App\Http\Controllers\Crud\ReportsController;
 use App\Http\Controllers\Crud\ServicesController;
@@ -30,6 +31,7 @@ Route::post('/services/createreservation', [ServicesController::class, 'addReser
 Route::post('/services/getallunpaidtransactions', [ServicesController::class, 'getAllUnpaidTransactions']);
 
 Route::get("/announcements/getallannouncements", [AnnouncementsController::class, 'getAllAnnouncements']);
+Route::get("/announcements/getlastestannouncement", [AnnouncementsController::class, 'getLatestAnnouncement']);
 Route::get("/announcements/getallnews", [AnnouncementsController::class, 'getAllNews']);
 Route::get("/announcements/getallevents", [AnnouncementsController::class, 'getAllEvents']);
 Route::get("/announcements/getpastevents", [AnnouncementsController::class, 'getPastEvents']);
@@ -45,3 +47,4 @@ Route::post('/usermanagement/promoteuser', [UserManagement::class, 'promoteUser'
 Route::post('/usermanagement/demoteuser', [UserManagement::class, 'demoteUser']);
 
 Auth::routes();
+Route::post("/mobilelogin", [UserManagement::class, 'mobileLogin']);

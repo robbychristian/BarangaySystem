@@ -149,10 +149,16 @@ class ServicesController extends Controller
         return DocumentSubmission::with('personalInfo')->with('additionalInfo')->with('paymentInfo')->get();
     }
 
-    public function getAllUnpaidTransactions()
+    public function getAllUnpaidTransactions(Request $request)
     {
-        return Payments::with(['ownedBy.user' => function ($query) {
-            $query->get();
-        }])->where('is_paid', 0)->get();
+        if ($request->exists('user_id')) {
+            return Payments::with(['ownedBy.user' => function ($query) use ($request) {
+                $query->where('id', $request->user_id);
+            }])->where('is_paid', 0)->get();
+        } else {
+            return Payments::with(['ownedBy.user' => function ($query) {
+                $query->get();
+            }])->where('is_paid', 0)->get();
+        }
     }
 }

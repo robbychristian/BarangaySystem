@@ -37,7 +37,7 @@ const HomePage = () => {
     };
 
     useEffect(() => {
-        api.get("announcements/getallannouncements")
+        api.get("announcements/getlastestannouncement")
             .then((response) => {
                 setAnnouncement(response.data);
             })
