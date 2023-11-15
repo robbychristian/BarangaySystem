@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Crud\AnnouncementsController;
 use App\Http\Controllers\Crud\ReportsController;
 use App\Http\Controllers\Crud\ServicesController;
+use App\Http\Controllers\Crud\TanodDeploymentController;
 use App\Http\Controllers\Crud\UserManagement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +46,11 @@ Route::get('/usermanagement/getallusers', [UserManagement::class, 'getAllUsers']
 Route::post('/usermanagement/createuser', [UserManagement::class, 'addUser']);
 Route::post('/usermanagement/promoteuser', [UserManagement::class, 'promoteUser']);
 Route::post('/usermanagement/demoteuser', [UserManagement::class, 'demoteUser']);
+Route::post('/usermanagement/verifyuser', [UserManagement::class, 'verifyUser']);
+
+Route::get('/tanoddeployment/getallstaff', [TanodDeploymentController::class, 'getAllStaff']);
+Route::get('/tanoddeployment/getalltanoddeployments', [TanodDeploymentController::class, 'getAllTanodDeployments']);
+Route::post('/tanoddeployment/tanoddeployment', [TanodDeploymentController::class, 'tanodDeployment']);
 
 Auth::routes();
 Route::post("/mobilelogin", [UserManagement::class, 'mobileLogin']);

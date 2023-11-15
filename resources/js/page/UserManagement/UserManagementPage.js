@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Box, Button, Modal, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import CustomBackTitle from "../../navigation/CustomBackTitle";
@@ -10,10 +10,13 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import moment from "moment";
 import { toast } from "react-toastify";
 import CustomToast from "../../components/CustomToast";
+import DescriptionIcon from "@mui/icons-material/Description";
 
-const UserManagementPage = () => {
+const UserManagementPage = (props) => {
     const [data, setData] = useState([]);
     const [count, setCount] = useState(0);
+    const [open, setOpen] = useState(false);
+    const [user, setUser] = useState(null);
     useEffect(() => {
         api.get("usermanagement/getallusers")
             .then((response) => {
@@ -23,6 +26,7 @@ const UserManagementPage = () => {
             .catch((err) => {
                 console.log(err.response);
             });
+        console.log(props.user_role);
     }, [count]);
 
     const columns = [
@@ -64,10 +68,11 @@ const UserManagementPage = () => {
         {
             field: "action",
             headerName: "Actions",
-            width: 160,
+            width: 250,
             editable: true,
             renderCell: (cellValue) => {
-                if (cellValue.row.user_role != 1) {
+                if (props.user_role == 4) {
+                } else if (cellValue.row.user_role != 1) {
                     return (
                         <>
                             <Button
@@ -119,6 +124,17 @@ const UserManagementPage = () => {
                             >
                                 <ArrowDownwardIcon className="text-red-500" />
                             </Button>
+                            {cellValue.row.is_verified == null &&
+                                cellValue.row.user_role == 4 && (
+                                    <Button
+                                        onClick={() => {
+                                            setUser(cellValue.row);
+                                            setOpen(true);
+                                        }}
+                                    >
+                                        <DescriptionIcon className="text-sky-600" />
+                                    </Button>
+                                )}
                         </>
                     );
                 }
@@ -138,6 +154,54 @@ const UserManagementPage = () => {
                     window.location.replace("/usermanagement/adduser")
                 }
             />
+            <Modal open={open} onClose={() => setOpen(false)}>
+                <Box
+                    sx={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        width: 550,
+                        bgcolor: "background.paper",
+                        border: "2px solid #000",
+                        boxShadow: 24,
+                        p: 4,
+                    }}
+                >
+                    <Typography variant="h5" fontWeight={700}>
+                        User's Submitted ID
+                    </Typography>
+                    <div className="flex justify-center items-center">
+                        <img
+                            src={`https://brgyugongpasigcity.com/BarangaySystem-main/public/image/SubmittedID/6/${
+                                user && user.submitted_id !== null
+                                    ? user.submitted_id
+                                    : ""
+                            }`}
+                        />
+                    </div>
+                    <div className="flex justify-center items-center">
+                        <Button
+                            variant="contained"
+                            onClick={() => {
+                                const id =
+                                    user && user.id !== null ? user.id : 0;
+                                api.post("usermanagement/verifyuser", {
+                                    id: id,
+                                })
+                                    .then((response) => {
+                                        window.location.reload();
+                                    })
+                                    .catch((err) => {
+                                        console.log(err.response);
+                                    });
+                            }}
+                        >
+                            Verify User
+                        </Button>
+                    </div>
+                </Box>
+            </Modal>
             <div className="my-5">
                 <DataGrid
                     rows={data}
@@ -160,8 +224,10 @@ const UserManagementPage = () => {
 export default UserManagementPage;
 
 if (document.getElementById("UserManagementPage")) {
+    const element = document.getElementById("UserManagementPage");
+    const props = Object.assign({}, element.dataset);
     ReactDOM.render(
-        <UserManagementPage />,
+        <UserManagementPage {...props} />,
         document.getElementById("UserManagementPage")
     );
 }

@@ -21,6 +21,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('user_role');
             $table->string('device_name')->nullable();
+            $table->string('submitted_id')->nullable();
+            $table->boolean('is_verified')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

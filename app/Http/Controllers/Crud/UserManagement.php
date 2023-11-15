@@ -58,4 +58,12 @@ class UserManagement extends Controller
                 'user_role' => (int)$request->user_role + 1
             ]);
     }
+
+    public function verifyUser(Request $request)
+    {
+        User::where('id', $request->id)
+            ->update([
+                'is_verified' => true
+            ]);
+    }
 }

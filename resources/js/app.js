@@ -37,3 +37,5 @@ require("./page/Reports/IncidentReports");
 
 require("./page/UserManagement/UserManagementPage");
 require("./page/UserManagement/AddUserPage");
+
+require("./page/TanodDeployment/TanodDeploymentPage");

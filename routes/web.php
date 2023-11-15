@@ -3,6 +3,7 @@
 use App\Http\Controllers\Features\AnnouncementsController;
 use App\Http\Controllers\Features\ReportsController;
 use App\Http\Controllers\Features\ServicesController;
+use App\Http\Controllers\Features\TanodDeployment;
 use App\Http\Controllers\Features\UserManagement;
 use Illuminate\Support\Facades\Route;
 
@@ -44,3 +45,5 @@ Route::get('/reports/incidentreports', [ReportsController::class, 'incidentRepor
 
 Route::get('/usermanagement', [UserManagement::class, 'index']);
 Route::get('/usermanagement/adduser', [UserManagement::class, 'addUser']);
+
+Route::get('/tanoddeployment', [TanodDeployment::class, 'index']);

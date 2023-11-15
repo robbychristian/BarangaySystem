@@ -1170,6 +1170,9 @@ input:checked + .toggle-bg {
 .h-6 {
   height: 1.5rem;
 }
+.h-60 {
+  height: 15rem;
+}
 .h-8 {
   height: 2rem;
 }
@@ -2069,6 +2072,10 @@ textarea {
 
   .lg\:hidden {
     display: none;
+  }
+
+  .lg\:h-80 {
+    height: 20rem;
   }
 
   .lg\:grid-cols-2 {

@@ -7,6 +7,8 @@ import { toast } from "react-toastify";
 import CustomToast from "../../components/CustomToast";
 import { api } from "../../config/api";
 import logo from "../../../../public/images/barnagayugong.png";
+import CustomFileUpload from "../../components/CustomFileUpload";
+import InfoIcon from "@mui/icons-material/Info";
 
 const RegisterPage = () => {
     const [loading, setLoading] = useState(false);
@@ -14,6 +16,7 @@ const RegisterPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [file, setFile] = useState();
 
     const onHandleRegister = () => {
         if (
@@ -28,12 +31,13 @@ const RegisterPage = () => {
         } else {
             setLoading(true);
             const toastLoading = toast.loading("Registering...");
-            api.post("register", {
-                name,
-                email,
-                password,
-                password_confirmation: confirmPassword,
-            })
+            const formdata = new FormData();
+            formdata.append("name", name);
+            formdata.append("email", email);
+            formdata.append("password", password);
+            formdata.append("password_confirmation", confirmPassword);
+            formdata.append("submitted_id", file);
+            api.post("register", formdata)
                 .then((response) => {
                     toast.update(toastLoading, {
                         render: "Registered!",
@@ -110,6 +114,20 @@ const RegisterPage = () => {
                             my={5}
                             type={`password`}
                         />
+                        <CustomFileUpload handleFile={setFile} my={10} />
+                        <div className="flex">
+                            <InfoIcon sx={{ fontSize: 20, color: "#0284C7" }} />
+                            <Typography
+                                variant="caption"
+                                sx={{
+                                    color: "#0284C7",
+                                    marginTop: 0.2,
+                                    marginLeft: 0.5,
+                                }}
+                            >
+                                Upload your ID here
+                            </Typography>
+                        </div>
                         <Typography variant="body1">
                             Already have an account?{" "}
                             <span className="underline cursor-pointer">
