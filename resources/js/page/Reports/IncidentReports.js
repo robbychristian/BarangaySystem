@@ -96,17 +96,31 @@ const columns = [
     },
 ];
 
-const IncidentReports = () => {
+const IncidentReports = (props) => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        api.get("reports/getallblotterreports")
-            .then((response) => {
-                setData(response.data);
-            })
-            .catch((err) => {
-                console.log(err.response);
-            });
+        if (props.user) {
+            api.get(
+                `reports/getallblotterreports?user_id=${
+                    JSON.parse(props.user).id
+                }`
+            )
+                .then((response) => {
+                    setData(response.data);
+                })
+                .catch((err) => {
+                    console.log(err.response);
+                });
+        } else {
+            api.get("reports/getallblotterreports")
+                .then((response) => {
+                    setData(response.data);
+                })
+                .catch((err) => {
+                    console.log(err.response);
+                });
+        }
     }, []);
 
     return (
@@ -134,8 +148,10 @@ const IncidentReports = () => {
 export default IncidentReports;
 
 if (document.getElementById("IncidentReportsPage")) {
+    const element = document.getElementById("IncidentReportsPage");
+    const props = Object.assign({}, element.dataset);
     ReactDOM.render(
-        <IncidentReports />,
+        <IncidentReports {...props} />,
         document.getElementById("IncidentReportsPage")
     );
 }

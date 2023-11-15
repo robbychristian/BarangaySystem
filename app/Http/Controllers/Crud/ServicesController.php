@@ -8,6 +8,7 @@ use App\Models\BlotterReportIncidentNarrative;
 use App\Models\BlotterReportReportingPerson;
 use App\Models\BlotterReportSuspectData;
 use App\Models\BlotterReportVictimData;
+use App\Models\ClinicSchedule;
 use App\Models\DocumentSubmission;
 use App\Models\DocumentSubmissionAdditionalInfo;
 use App\Models\DocumentSubmissionPersonalInfo;
@@ -17,6 +18,7 @@ use App\Models\ReservationFormAdditionalInfo;
 use App\Models\ReservationFormPersonalInfo;
 use App\Models\ReservationFormRequest;
 use App\Models\User;
+use Faker\Provider\ar_EG\Payment;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
@@ -144,9 +146,13 @@ class ServicesController extends Controller
         ]);
     }
 
-    public function getAllDocuments()
+    public function getAllDocuments(Request $request)
     {
-        return DocumentSubmission::with('personalInfo')->with('additionalInfo')->with('paymentInfo')->get();
+        if ($request->exists('user_id')) {
+            return DocumentSubmission::where('user_id', $request->user_id)->with('personalInfo')->with('additionalInfo')->with('paymentInfo')->get();
+        } else {
+            return DocumentSubmission::with('personalInfo')->with('additionalInfo')->with('paymentInfo')->get();
+        }
     }
 
     public function getAllUnpaidTransactions(Request $request)
@@ -160,5 +166,32 @@ class ServicesController extends Controller
                 $query->get();
             }])->where('is_paid', 0)->get();
         }
+    }
+
+    public function submitReceipt(Request $request)
+    {
+        if ($request->hasFile('file')) {
+            $fileName = $request->file->getClientOriginalName();
+            Payments::where('id', $request->id)->update([
+                'payment_image' => $fileName
+            ]);
+            $request->file->move(public_path('image/payments/' . $request->id), $fileName);
+        }
+        // return $request;
+    }
+
+    public function verifyPayment(Request $request)
+    {
+        Payments::where('id', $request->id)->update([
+            'is_paid' => true
+        ]);
+    }
+
+    public function scheduleClinic(Request $request)
+    {
+        ClinicSchedule::create([
+            'user_id' => $request->user_id,
+            'schedule' => $request->schedule,
+        ]);
     }
 }

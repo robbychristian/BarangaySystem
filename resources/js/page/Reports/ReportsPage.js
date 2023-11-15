@@ -7,7 +7,7 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import DraftsIcon from "@mui/icons-material/Drafts";
 import CustomClickableCard from "../../components/CustomClickableCard";
 
-const ReportsPage = () => {
+const ReportsPage = (props) => {
     return (
         <div className="px-10 py-4">
             <Typography variant="h4" fontWeight={`700`}>
@@ -27,17 +27,23 @@ const ReportsPage = () => {
                         }
                     />
                 </div>
-                <div className="col-span-1">
-                    <CustomClickableCard
-                        title={`RESIDENT RECORDS`}
-                        icon={
-                            <HouseIcon sx={{ fontSize: 180, color: "#fff" }} />
-                        }
-                        onClick={() => {
-                            window.location.replace("/reports/residentrecords");
-                        }}
-                    />
-                </div>
+                {JSON.parse(props.user).user_role != 4 && (
+                    <div className="col-span-1">
+                        <CustomClickableCard
+                            title={`RESIDENT RECORDS`}
+                            icon={
+                                <HouseIcon
+                                    sx={{ fontSize: 180, color: "#fff" }}
+                                />
+                            }
+                            onClick={() => {
+                                window.location.replace(
+                                    "/reports/residentrecords"
+                                );
+                            }}
+                        />
+                    </div>
+                )}
                 <div className="col-span-1">
                     <CustomClickableCard
                         title={`INCIDENT REPORTS`}
@@ -57,6 +63,11 @@ const ReportsPage = () => {
                         icon={
                             <DraftsIcon sx={{ fontSize: 180, color: "#fff" }} />
                         }
+                        onClick={() => {
+                            window.location.replace(
+                                "/reports/transactionreports"
+                            );
+                        }}
                     />
                 </div>
             </div>
@@ -67,5 +78,10 @@ const ReportsPage = () => {
 export default ReportsPage;
 
 if (document.getElementById("ReportsPage")) {
-    ReactDOM.render(<ReportsPage />, document.getElementById("ReportsPage"));
+    const element = document.getElementById("ReportsPage");
+    const props = Object.assign({}, element.dataset);
+    ReactDOM.render(
+        <ReportsPage {...props} />,
+        document.getElementById("ReportsPage")
+    );
 }

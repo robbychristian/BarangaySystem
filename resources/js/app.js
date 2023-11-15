@@ -23,6 +23,7 @@ require("./page/Services/DocumentSubmissionPage");
 require("./page/Services/BlotterReportPage");
 require("./page/Services/ReservationPage");
 require("./page/Services/TransactionsPage");
+require("./page/Services/ClinicPage");
 
 require("./page/Announcements/AnnouncementPage");
 require("./page/Announcements/BarangayNews/BarangayNewsPage");
@@ -34,6 +35,7 @@ require("./page/Reports/ReportsPage");
 require("./page/Reports/BarangayReports");
 require("./page/Reports/ResidentRecords");
 require("./page/Reports/IncidentReports");
+require("./page/Reports/TransactionReports");
 
 require("./page/UserManagement/UserManagementPage");
 require("./page/UserManagement/AddUserPage");

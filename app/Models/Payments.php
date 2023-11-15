@@ -13,6 +13,7 @@ class Payments extends Model
         'document_id',
         'payment_price',
         'is_paid',
+        'payment_image',
     ];
 
     public function ownedBy()

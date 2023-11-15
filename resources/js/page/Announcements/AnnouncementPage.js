@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import CustomClickableCard from "../../components/CustomClickableCard";
 import NewspaperIcon from "@mui/icons-material/Newspaper";
@@ -7,7 +7,7 @@ import EventIcon from "@mui/icons-material/Event";
 import EventRepeatIcon from "@mui/icons-material/EventRepeat";
 import CampaignIcon from "@mui/icons-material/Campaign";
 
-const AnnouncementPage = () => {
+const AnnouncementPage = (props) => {
     return (
         <div className="px-10 py-4">
             <Typography variant="h4" fontWeight={`700`}>
@@ -57,21 +57,23 @@ const AnnouncementPage = () => {
                         }}
                     />
                 </div>
-                <div className="col-span-1">
-                    <CustomClickableCard
-                        title={`CREATE ANNOUNCEMENT`}
-                        icon={
-                            <CampaignIcon
-                                sx={{ fontSize: 180, color: "#fff" }}
-                            />
-                        }
-                        onClick={() => {
-                            window.location.replace(
-                                "/announcements/createannouncement"
-                            );
-                        }}
-                    />
-                </div>
+                {props.user_role != 4 && (
+                    <div className="col-span-1">
+                        <CustomClickableCard
+                            title={`CREATE ANNOUNCEMENT`}
+                            icon={
+                                <CampaignIcon
+                                    sx={{ fontSize: 180, color: "#fff" }}
+                                />
+                            }
+                            onClick={() => {
+                                window.location.replace(
+                                    "/announcements/createannouncement"
+                                );
+                            }}
+                        />
+                    </div>
+                )}
             </div>
         </div>
     );
@@ -80,8 +82,10 @@ const AnnouncementPage = () => {
 export default AnnouncementPage;
 
 if (document.getElementById("AnnouncementPage")) {
+    const element = document.getElementById("AnnouncementPage");
+    const props = Object.assign({}, element.dataset);
     ReactDOM.render(
-        <AnnouncementPage />,
+        <AnnouncementPage {...props} />,
         document.getElementById("AnnouncementPage")
     );
 }

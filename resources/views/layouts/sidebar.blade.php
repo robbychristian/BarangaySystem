@@ -4,14 +4,12 @@
         aria-label="Sidebar">
         <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
             <ul class="space-y-2 font-medium">
-                @if (Auth::user()->user_role == 1)
-                    <li>
-                        <a href="/home"
-                            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                            <span class="ml-3">Home</span>
-                        </a>
-                    </li>
-                @endif
+                <li>
+                    <a href="/home"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <span class="ml-3">Home</span>
+                    </a>
+                </li>
                 <li>
                     <a href="/services"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
@@ -32,12 +30,14 @@
                         <span class="flex-1 ml-3 whitespace-nowrap">Records</span>
                     </a>
                 </li>
-                <li>
-                    <a href="/usermanagement"
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <span class="flex-1 ml-3 whitespace-nowrap">User Management</span>
-                    </a>
-                </li>
+                @if (Auth::user()->user_role != 4)
+                    <li>
+                        <a href="/usermanagement"
+                            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <span class="flex-1 ml-3 whitespace-nowrap">User Management</span>
+                        </a>
+                    </li>
+                @endif
                 <li>
                     <a href="/tanoddeployment"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">

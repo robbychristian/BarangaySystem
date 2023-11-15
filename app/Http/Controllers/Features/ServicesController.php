@@ -27,4 +27,8 @@ class ServicesController extends Controller
     {
         return view("features.Services.Transactions");
     }
+    public function clinic()
+    {
+        return view('features.Services.Clinic');
+    }
 }

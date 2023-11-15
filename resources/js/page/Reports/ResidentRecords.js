@@ -54,7 +54,7 @@ const columns = [
     },
 ];
 
-const ResidentRecords = () => {
+const ResidentRecords = (props) => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
@@ -91,8 +91,10 @@ const ResidentRecords = () => {
 export default ResidentRecords;
 
 if (document.getElementById("ResidentRecordsPage")) {
+    const element = document.getElementById("ResidentRecordsPage");
+    const props = Object.assign({}, element.dataset);
     ReactDOM.render(
-        <ResidentRecords />,
+        <ResidentRecords {...props} />,
         document.getElementById("ResidentRecordsPage")
     );
 }

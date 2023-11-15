@@ -63,6 +63,9 @@ const ServicesPage = () => {
                                 sx={{ fontSize: 180, color: "#fff" }}
                             />
                         }
+                        onClick={() => {
+                            window.location.replace("/services/clinic");
+                        }}
                     />
                 </div>
                 <div className="col-span-1">
@@ -78,14 +81,14 @@ const ServicesPage = () => {
                         }}
                     />
                 </div>
-                <div className="col-span-1">
+                {/* <div className="col-span-1">
                     <CustomClickableCard
                         title={`APPOINTMENT`}
                         icon={
                             <TodayIcon sx={{ fontSize: 180, color: "#fff" }} />
                         }
                     />
-                </div>
+                </div> */}
             </div>
         </div>
     );

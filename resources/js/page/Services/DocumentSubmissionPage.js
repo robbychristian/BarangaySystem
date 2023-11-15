@@ -8,6 +8,7 @@ import CustomFileUpload from "../../components/CustomFileUpload";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { api } from "../../config/api";
 import CustomAutoComplete from "../../components/CustomAutoComplete";
+import swal from "sweetalert";
 
 const DocumentSubmissionPage = () => {
     const [allUsers, setAllUsers] = useState([]);
@@ -49,7 +50,14 @@ const DocumentSubmissionPage = () => {
 
         api.post("services/createdocument", formdata)
             .then((response) => {
-                console.log(response.data);
+                swal({
+                    icon: "success",
+                    title: "Success!",
+                    text: "Document has been submitted!",
+                    buttons: false,
+                }).then((response) => {
+                    window.location.reload();
+                });
             })
             .catch((err) => {
                 console.log(err.response);

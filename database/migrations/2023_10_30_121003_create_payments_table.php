@@ -18,6 +18,7 @@ class CreatePaymentsTable extends Migration
             $table->string('document_id');
             $table->string('payment_price');
             $table->boolean('is_paid');
+            $table->string('payment_image')->nullable();
             $table->timestamps();
         });
     }

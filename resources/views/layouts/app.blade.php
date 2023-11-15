@@ -42,7 +42,8 @@
                                 <span class="sr-only">Toggle sidebar</span>
                             </button>
                             <a href="{{ route('home') }}" class="flex mr-4">
-                                <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">Title</span>
+                                <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">Barnagay
+                                    Ugong</span>
                             </a>
                         </div>
                         <div class="flex items-center lg:order-2">

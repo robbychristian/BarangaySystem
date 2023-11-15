@@ -26,4 +26,8 @@ class ReportsController extends Controller
     {
         return view('features.Reports.IncidentReports');
     }
+    public function transactionReports()
+    {
+        return view('features.Reports.TransactionReports');
+    }
 }

@@ -30,6 +30,9 @@ Route::post('/services/createdocument', [ServicesController::class, 'addDocument
 Route::post('/services/createblotter', [ServicesController::class, 'addBlotterReport']);
 Route::post('/services/createreservation', [ServicesController::class, 'addReservation']);
 Route::post('/services/getallunpaidtransactions', [ServicesController::class, 'getAllUnpaidTransactions']);
+Route::post('/services/submitreceipt', [ServicesController::class, 'submitReceipt']);
+Route::post('/services/verifypayment', [ServicesController::class, 'verifyPayment']);
+Route::post('/services/scheduleclinic', [ServicesController::class, 'scheduleClinic']);
 
 Route::get("/announcements/getallannouncements", [AnnouncementsController::class, 'getAllAnnouncements']);
 Route::get("/announcements/getlastestannouncement", [AnnouncementsController::class, 'getLatestAnnouncement']);
@@ -41,6 +44,7 @@ Route::post('/announcements/createnews', [AnnouncementsController::class, 'addNe
 Route::post('/announcements/createevent', [AnnouncementsController::class, 'addEvent']);
 
 Route::get('/reports/getallblotterreports', [ReportsController::class, 'getAllBlotterReports']);
+Route::post('/reports/getallpaidtransactions', [ReportsController::class, 'getAllPaidTransactions']);
 
 Route::get('/usermanagement/getallusers', [UserManagement::class, 'getAllUsers']);
 Route::post('/usermanagement/createuser', [UserManagement::class, 'addUser']);

@@ -39,7 +39,7 @@ function LocationMarker({ coords, setCoords, center }) {
     );
 }
 
-const TanodDeploymentPage = () => {
+const TanodDeploymentPage = (props) => {
     const [tanod, setTanod] = useState([]);
     const [areas, setAreas] = useState([]);
     const [selectedTanod1, setSelectedTanod1] = useState("");
@@ -121,47 +121,88 @@ const TanodDeploymentPage = () => {
                     paddingRight: 5,
                 }}
             >
-                <div className="grid grid-cols-1 gap-4 my-5">
-                    <div className="col-span-1">
-                        <CustomAutoComplete
-                            label={`Selected Tanod`}
-                            value={selectedTanod1.label}
-                            onChange={(e, value) => {
-                                setSelectedTanod1(value);
-                            }}
-                            options={tanod}
-                        />
+                {JSON.parse(props.user).user_role != 4 ? (
+                    <div className="grid grid-cols-1 gap-4 my-5">
+                        <div className="col-span-1">
+                            <CustomAutoComplete
+                                label={`Selected Tanod`}
+                                value={selectedTanod1.label}
+                                onChange={(e, value) => {
+                                    setSelectedTanod1(value);
+                                }}
+                                options={tanod}
+                            />
+                        </div>
+                        <div className="col-span-1">
+                            <CustomAutoComplete
+                                label={`Selected Tanod`}
+                                value={selectedTanod2.label}
+                                onChange={(e, value) => {
+                                    setSelectedTanod2(value);
+                                }}
+                                options={tanod}
+                            />
+                        </div>
+                        <div className="col-span-1">
+                            <CustomDateTimeInput
+                                label={`Date and Time of Deployment`}
+                                value={moment(dateTimeDeployment)}
+                                onChangeValue={(value) => {
+                                    setDateTimeDeployment(value);
+                                }}
+                            />
+                        </div>
+                        <div className="col-span-1">
+                            <CustomTextInput
+                                value={description}
+                                label={`Description`}
+                                onChangeValue={(e) =>
+                                    setDescription(e.target.value)
+                                }
+                                multiline
+                            />
+                        </div>
+                        <div className="col-span-1 h-60 lg:h-80 w-full">
+                            <MapContainer
+                                style={{ height: "100%", width: "100%" }}
+                                center={[center.lat, center.lng]}
+                                zoom={14.5}
+                            >
+                                <TileLayer
+                                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                />
+                                {areas.length > 0 &&
+                                    areas.map((item, index) => {
+                                        console.log(item);
+                                        return (
+                                            <Circle
+                                                key={index}
+                                                center={[
+                                                    Number(
+                                                        item.coordinates_lat
+                                                    ),
+                                                    Number(
+                                                        item.coordinates_lng
+                                                    ),
+                                                ]}
+                                                pathOptions={{
+                                                    color: "orange",
+                                                }}
+                                                radius={100}
+                                            />
+                                        );
+                                    })}
+                                <LocationMarker
+                                    coords={iconCoords}
+                                    setCoords={setIconCoords}
+                                    center={center}
+                                />
+                            </MapContainer>
+                        </div>
                     </div>
-                    <div className="col-span-1">
-                        <CustomAutoComplete
-                            label={`Selected Tanod`}
-                            value={selectedTanod2.label}
-                            onChange={(e, value) => {
-                                setSelectedTanod2(value);
-                            }}
-                            options={tanod}
-                        />
-                    </div>
-                    <div className="col-span-1">
-                        <CustomDateTimeInput
-                            label={`Date and Time of Deployment`}
-                            value={moment(dateTimeDeployment)}
-                            onChangeValue={(value) => {
-                                setDateTimeDeployment(value);
-                            }}
-                        />
-                    </div>
-                    <div className="col-span-1">
-                        <CustomTextInput
-                            value={description}
-                            label={`Description`}
-                            onChangeValue={(e) =>
-                                setDescription(e.target.value)
-                            }
-                            multiline
-                        />
-                    </div>
-                    <div className="col-span-1 h-60 lg:h-80 w-full">
+                ) : (
+                    <div className="h-60 lg:h-80 w-full">
                         <MapContainer
                             style={{ height: "100%", width: "100%" }}
                             center={[center.lat, center.lng]}
@@ -193,16 +234,18 @@ const TanodDeploymentPage = () => {
                             />
                         </MapContainer>
                     </div>
-                </div>
+                )}
             </Card>
-            <Button
-                variant="contained"
-                fullWidth
-                onClick={handleSubmitDeployment}
-                sx={{ marginTop: 2 }}
-            >
-                SUBMIT
-            </Button>
+            {JSON.parse(props.user).user_role != 4 ? (
+                <Button
+                    variant="contained"
+                    fullWidth
+                    onClick={handleSubmitDeployment}
+                    sx={{ marginTop: 2 }}
+                >
+                    SUBMIT
+                </Button>
+            ) : null}
         </div>
     );
 };
@@ -210,8 +253,10 @@ const TanodDeploymentPage = () => {
 export default TanodDeploymentPage;
 
 if (document.getElementById("TanodDeploymentPage")) {
+    const element = document.getElementById("TanodDeploymentPage");
+    const props = Object.assign({}, element.dataset);
     ReactDOM.render(
-        <TanodDeploymentPage />,
+        <TanodDeploymentPage {...props} />,
         document.getElementById("TanodDeploymentPage")
     );
 }

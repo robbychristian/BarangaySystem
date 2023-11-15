@@ -31,6 +31,7 @@ Route::get('/services/documentsubmission', [ServicesController::class, "document
 Route::get('/services/blotterreport', [ServicesController::class, "blotterReport"]);
 Route::get('/services/reservation', [ServicesController::class, "reservation"]);
 Route::get('/services/transactions', [ServicesController::class, "transactions"]);
+Route::get('/services/clinic', [ServicesController::class, "clinic"]);
 
 Route::get('/announcements', [AnnouncementsController::class, 'index']);
 Route::get('/announcements/barangaynews', [AnnouncementsController::class, 'barangayNews']);
@@ -42,6 +43,7 @@ Route::get('/reports', [ReportsController::class, 'index']);
 Route::get('/reports/barangayreports', [ReportsController::class, 'barangayReports']);
 Route::get('/reports/residentrecords', [ReportsController::class, 'residentRecords']);
 Route::get('/reports/incidentreports', [ReportsController::class, 'incidentReports']);
+Route::get('/reports/transactionreports', [ReportsController::class, 'transactionReports']);
 
 Route::get('/usermanagement', [UserManagement::class, 'index']);
 Route::get('/usermanagement/adduser', [UserManagement::class, 'addUser']);
