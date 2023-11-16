@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import { api } from "../../config/api";
+import CustomBackTitle from "../../navigation/CustomBackTitle";
 
 const UpcomingEventsPage = () => {
     const [events, setEvents] = useState([]);
@@ -28,6 +29,7 @@ const UpcomingEventsPage = () => {
 
     return (
         <div>
+            <CustomBackTitle title={`Upcoming Events`} url={`/announcements`} />
             <FullCalendar
                 plugins={[dayGridPlugin]}
                 initialView="dayGridMonth"

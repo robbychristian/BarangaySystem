@@ -309,8 +309,10 @@ const DocumentSubmissionPage = () => {
 export default DocumentSubmissionPage;
 
 if (document.getElementById("DocumentSubmissionPage")) {
+    const element = document.getElementById("DocumentSubmissionPage");
+    const props = Object.assign({}, element.dataset);
     ReactDOM.render(
-        <DocumentSubmissionPage />,
+        <DocumentSubmissionPage {...props} />,
         document.getElementById("DocumentSubmissionPage")
     );
 }

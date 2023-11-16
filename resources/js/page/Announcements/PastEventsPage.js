@@ -29,10 +29,7 @@ const PastEventsPage = () => {
 
     return (
         <div className="px-10 py-4">
-            <CustomBackTitle
-                title={`Incident Reports`}
-                url={`/announcements`}
-            />
+            <CustomBackTitle title={`Past Events`} url={`/announcements`} />
             <FullCalendar
                 plugins={[dayGridPlugin]}
                 initialView="dayGridMonth"

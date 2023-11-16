@@ -9,6 +9,7 @@ const CustomAutoComplete = ({ options, value, onChange, label }) => {
             value={value}
             renderInput={(params) => <TextField {...params} label={label} />}
             fullWidth
+            disableClearable
         />
     );
 };

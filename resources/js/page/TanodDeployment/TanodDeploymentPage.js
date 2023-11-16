@@ -227,11 +227,6 @@ const TanodDeploymentPage = (props) => {
                                         />
                                     );
                                 })}
-                            <LocationMarker
-                                coords={iconCoords}
-                                setCoords={setIconCoords}
-                                center={center}
-                            />
                         </MapContainer>
                     </div>
                 )}

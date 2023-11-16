@@ -18,7 +18,7 @@ class ReportsController extends Controller
     public function getAllBlotterReports(Request $request)
     {
         if ($request->exists("user_id")) {
-            return BlotterReport::where('user_id')->with('reportingPerson')->with('suspectData')->with('victimData')->with('incidentNarrative')->get();
+            return BlotterReport::where('user_id', $request->user_id)->with('reportingPerson')->with('suspectData')->with('victimData')->with('incidentNarrative')->get();
         } else {
             return BlotterReport::with('reportingPerson')->with('suspectData')->with('victimData')->with('incidentNarrative')->get();
         }

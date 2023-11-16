@@ -65,7 +65,9 @@ const RegisterPage = () => {
             <CustomToast />
             <div className="grid grid-cols-1 lg:grid-cols-2 h-screen px-24">
                 <div className="hidden lg:col-span-1 lg:flex lg:justify-center lg:items-center">
-                    <img src={logo} />
+                    <img
+                        src={`https://brgyugongpasigcity.com/BarangaySystem-main/public/images/barnagayugong.png`}
+                    />
                 </div>
                 <div className="col-span-1 flex flex-col justify-center items-center">
                     <div className="p-10 border-2 border-sky-600 rounded bg-white">

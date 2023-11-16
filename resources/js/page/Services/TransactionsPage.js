@@ -118,7 +118,9 @@ const TransactionsPage = (props) => {
             <CustomToast />
             <CustomBackTitle
                 title={`Transactions`}
-                url={() => window.location.replace("/services")}
+                url={() => {
+                    window.location.replace("/services");
+                }}
             />
             <div className="my-5">
                 <Modal open={open} onClose={() => setOpen(false)}>

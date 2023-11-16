@@ -62,14 +62,14 @@ const LoginPage = () => {
                                 fontWeight={"700"}
                                 color={`#0284C7`}
                             >
-                                Login Here!
+                                Welcome to Barangay Ugong!
                             </Typography>
                             <Typography
                                 fontSize={15}
                                 fontWeight={"300"}
                                 color={"#0284C7"}
                             >
-                                wala akong maisip na text
+                                Login Here!
                             </Typography>
                         </div>
                         <CustomTextInput
@@ -104,7 +104,9 @@ const LoginPage = () => {
                     </div>
                 </div>
                 <div className="hidden lg:col-span-1 lg:flex lg:justify-center lg:items-center">
-                    <img src={logo} />
+                    <img
+                        src={`https://brgyugongpasigcity.com/BarangaySystem-main/public/images/barnagayugong.png`}
+                    />
                 </div>
             </div>
         </div>
