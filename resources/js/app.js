@@ -40,4 +40,5 @@ require("./page/Reports/TransactionReports");
 require("./page/UserManagement/UserManagementPage");
 require("./page/UserManagement/AddUserPage");
 
+require("./page/TanodDeployment/TanodDeploymentList");
 require("./page/TanodDeployment/TanodDeploymentPage");
