@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-class DocumentSubmission extends Model
+use OwenIt\Auditing\Contracts\Auditable;
+use OwenIt\Auditing\Auditable as AuditableTrait;
+class DocumentSubmission extends Model implements Auditable
 {
+    use AuditableTrait;
     use HasFactory;
     protected $fillable = [
         'user_id'

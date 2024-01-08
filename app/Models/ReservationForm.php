@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-class ReservationForm extends Model
+use OwenIt\Auditing\Contracts\Auditable;
+use OwenIt\Auditing\Auditable as AuditableTrait;
+class ReservationForm extends Model implements Auditable
 {
+    use AuditableTrait;
     use HasFactory;
 
     protected $fillable = [

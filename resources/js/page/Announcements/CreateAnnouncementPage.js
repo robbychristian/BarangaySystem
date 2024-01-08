@@ -40,11 +40,12 @@ const CreateAnnouncementPage = (props) => {
                 announcement_title: title,
                 announcement_description: description,
             })
-                .then(() => {
+                .then((response) => {
                     if (createType === "1") {
                         toast("Announcement has been added!", {
                             type: "success",
                         });
+                        console.log(response.data)
                         setTitle("");
                         setDescription("");
                     }

@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Crud;
 
 use App\Http\Controllers\Controller;
+use App\Mail\AnnouncementEmail;
 use App\Models\Announcements;
 use App\Models\BarangayNews;
 use App\Models\Events;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 
 class AnnouncementsController extends Controller
 {
@@ -62,6 +64,10 @@ class AnnouncementsController extends Controller
         // ]);
         
         $allUsers = User::all()->pluck('email');
+
+        foreach ($allUsers as $user) {
+            Mail::to($user)->send(new AnnouncementEmail());
+        }
 
         return $allUsers;
     }
