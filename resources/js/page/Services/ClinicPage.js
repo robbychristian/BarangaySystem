@@ -9,9 +9,10 @@ import CustomDateTimeInput from "../../components/CustomDateTimeInput";
 import moment from "moment";
 import swal from "sweetalert";
 
-const ClinicPage = () => {
+const ClinicPage = ({user}) => {
+    const userObject = JSON.parse(user)
     const [allUsers, setAllUsers] = useState([]);
-    const [userValue, setUserValue] = useState({});
+    const [userValue, setUserValue] = useState(userObject.user_role == 4 ? {label: userObject.name, value: userObject.id} : {});
     const [schedule, setSchedule] = useState(moment());
 
     const handleSubmitSchedule = () => {
@@ -82,6 +83,7 @@ const ClinicPage = () => {
                                     setUserValue(value);
                                 }}
                                 options={allUsers}
+                                isUser={userObject.user_role == 4}
                             />
                         </div>
                         <div className="col-span-1">

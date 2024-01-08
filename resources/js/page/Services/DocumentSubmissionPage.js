@@ -10,10 +10,12 @@ import { api } from "../../config/api";
 import CustomAutoComplete from "../../components/CustomAutoComplete";
 import swal from "sweetalert";
 
-const DocumentSubmissionPage = () => {
+const DocumentSubmissionPage = ({user}) => {
+    const userObject = JSON.parse(user)
+    // const [user, setUser] = useState(JSON.parse(props.user))
     const [allUsers, setAllUsers] = useState([]);
     //PERSONAL INFO
-    const [userValue, setUserValue] = useState({});
+    const [userValue, setUserValue] = useState(userObject.user_role == 4 ? {label: userObject.name, value: userObject.id} : {});
     const [birthdate, setBirthdate] = useState(dayjs());
     const [age, setAge] = useState("");
     const [gender, setGender] = useState("");
@@ -85,6 +87,23 @@ const DocumentSubmissionPage = () => {
             });
     }, []);
 
+    useEffect(() => {
+        if (userObject.user_role == 4) {
+            api.get(`getuseronlogin?user_id=${userObject.id}`)
+                .then((response) => {
+                    setBirthdate(dayjs(response.data.birthday))
+                    setAge(response.data.age)
+                    setGender(response.data.gender)
+                    setCivilStatus(response.data.civil_status)
+                    setAddress(response.data.address)
+                    setEmail(response.data.owned_by.email)
+                    setPhoneNumber(response.data.phone_number)
+                }).catch(err => {
+                    console.log(err.response)
+                })
+        }
+    }, [])
+
     return (
         <div className="px-10 py-4">
             <div className="flex items-center space-x-4">
@@ -116,14 +135,16 @@ const DocumentSubmissionPage = () => {
                     </Typography>
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 my-5">
                         <div className="col-span-1">
-                            <CustomAutoComplete
-                                label={`Name`}
-                                value={userValue.label}
-                                onChange={(e, value) => {
-                                    setUserValue(value);
-                                }}
-                                options={allUsers}
-                            />
+                                <CustomAutoComplete
+                                    label={`Name`}
+                                    value={userValue.label}
+                                    onChange={(e, value) => {
+                                        setUserValue(value);
+                                        console.log(value)
+                                    }}
+                                    options={allUsers}
+                                    isUser={userObject.user_role == 4}
+                                />
                         </div>
                         <div className="col-span-1">
                             <CustomDatePicker

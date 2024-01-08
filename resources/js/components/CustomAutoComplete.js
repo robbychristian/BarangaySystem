@@ -1,7 +1,7 @@
 import { Autocomplete, TextField } from "@mui/material";
 import React from "react";
 
-const CustomAutoComplete = ({ options, value, onChange, label }) => {
+const CustomAutoComplete = ({ options, value, onChange, label, isUser }) => {
     return (
         <Autocomplete
             options={options}
@@ -10,6 +10,7 @@ const CustomAutoComplete = ({ options, value, onChange, label }) => {
             renderInput={(params) => <TextField {...params} label={label} />}
             fullWidth
             disableClearable
+            disabled={isUser}
         />
     );
 };

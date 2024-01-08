@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Announcements;
 use App\Models\BarangayNews;
 use App\Models\Events;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -54,11 +55,15 @@ class AnnouncementsController extends Controller
 
     public function addAnnouncement(Request $request)
     {
-        Announcements::create([
-            'user_id' => $request->user_id,
-            'announcement_title' => $request->announcement_title,
-            'announcement_description' => $request->announcement_description,
-        ]);
+        // Announcements::create([
+        //     'user_id' => $request->user_id,
+        //     'announcement_title' => $request->announcement_title,
+        //     'announcement_description' => $request->announcement_description,
+        // ]);
+        
+        $allUsers = User::all()->pluck('email');
+
+        return $allUsers;
     }
 
     public function addNews(Request $request)

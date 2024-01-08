@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Crud;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\UserProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -25,6 +26,15 @@ class UserManagement extends Controller
         } else {
             return response(['user' => $user, 'token' => $user->createToken($request->device_name)->plainTextToken]);
         }
+    }
+
+    public function getUserOnLogin(Request $request)
+    {
+        // $user = User::where('id', $request->user_id)->first();
+        // $user_profile = UserProfile::where("user_id", $request->user_id)->first();
+        // return response(["user" => $user, "user_profile" => $user_profile]);
+        $user = UserProfile::where('user_id', $request->user_id)->with('ownedBy')->first();
+        return $user;
     }
 
     public function getAllUsers()

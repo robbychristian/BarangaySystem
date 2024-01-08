@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Models\UserProfile;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -74,6 +75,15 @@ class RegisterController extends Controller
                 'user_role' => 4,
                 'password' => Hash::make($data['password']),
                 'submitted_id' => $fileName,
+            ]);
+            UserProfile::create([
+                'user_id' => $user->id,
+                'birthday' => $data['birthday'],
+                'age' => $data['age'],
+                'gender' => $data['gender'],
+                'civil_status' => $data['civil_status'],
+                'address' => $data['address'],
+                'phone_number' => $data['phone_number'],
             ]);
             request()->submitted_id->move(public_path('image/SubmittedID/' . $user->id), $fileName);
             return $user;

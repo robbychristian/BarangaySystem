@@ -58,3 +58,4 @@ Route::post('/tanoddeployment/tanoddeployment', [TanodDeploymentController::clas
 
 Auth::routes();
 Route::post("/mobilelogin", [UserManagement::class, 'mobileLogin']);
+Route::get("/getuseronlogin", [UserManagement::class, 'getUserOnLogin']);

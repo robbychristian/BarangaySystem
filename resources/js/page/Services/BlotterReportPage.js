@@ -11,11 +11,12 @@ import moment from "moment";
 import CustomToast from "../../components/CustomToast";
 import { toast } from "react-toastify";
 
-const BlotterReportPage = () => {
+const BlotterReportPage = ({user}) => {
+    const userObject = JSON.parse(user)
     const [incidentType, setIncidentType] = useState("");
 
     //REPORTING PERSON
-    const [reportingName, setReportingName] = useState("");
+    const [reportingName, setReportingName] = useState(userObject.user_role == 4 ? {label: userObject.name, value: userObject.id} : {});
     const [dateTimeReport, setDateTimeReport] = useState(moment());
     const [reportingAge, setReportingAge] = useState("");
     const [reportingGender, setReportingGender] = useState("");
@@ -109,6 +110,20 @@ const BlotterReportPage = () => {
             });
     }, []);
 
+    useEffect(() => {
+        if (userObject.user_role == 4) {
+            api.get(`getuseronlogin?user_id=${userObject.id}`).then((response => {
+                console.log(response.data)
+                setReportingAge(response.data.age)
+                setReportingGender(response.data.gender)
+                setReportingAddress(response.data.address)
+                setReportingPhoneNumber(response.data.phone_number)
+            })).catch(err => {
+                console.log(err.response)
+            })
+        }
+    }, [])
+
     return (
         <div className="px-10 py-4">
             <CustomToast />
@@ -156,6 +171,7 @@ const BlotterReportPage = () => {
                                     setReportingName(value);
                                 }}
                                 options={allUsers}
+                                isUser={userObject.user_role == 4}
                             />
                         </div>
                         <div className="col-span-1">
@@ -455,8 +471,10 @@ const BlotterReportPage = () => {
 export default BlotterReportPage;
 
 if (document.getElementById("BlotterReportPage")) {
+    const element = document.getElementById("BlotterReportPage")
+    const props = Object.assign({}, element.dataset)
     ReactDOM.render(
-        <BlotterReportPage />,
+        <BlotterReportPage {...props} />,
         document.getElementById("BlotterReportPage")
     );
 }

@@ -10,11 +10,13 @@ import moment from "moment";
 import { api } from "../../config/api";
 import { toast } from "react-toastify";
 import CustomToast from "../../components/CustomToast";
+import dayjs from "dayjs";
 
-const ReservationPage = () => {
+const ReservationPage = ({user}) => {
+    const userObject = JSON.parse(user)
     const [allUsers, setAllUsers] = useState([]);
     // PERSONAL INFORMATION
-    const [name, setName] = useState("");
+    const [name, setName] = useState(userObject.user_role == 4 ? {label: userObject.name, value: userObject.id} : {});
     const [birthdate, setBirthdate] = useState(moment());
     const [age, setAge] = useState("");
     const [gender, setGender] = useState("");
@@ -85,6 +87,22 @@ const ReservationPage = () => {
             });
     }, []);
 
+    useEffect(() => {
+        if (userObject.user_role == 4) {
+            api.get(`getuseronlogin?user_id=${userObject.id}`)
+                .then(response => {
+                    console.log(response.data)
+                    setAge(response.data.age)
+                    setBirthdate(dayjs(response.data.birthday))
+                    setGender(response.data.gender)
+                    setCivilStatus(response.data.civil_status)
+                    setAddress(response.data.address)
+                    setEmail(response.data.owned_by.email)
+                    setPhoneNumber(response.data.phone_number)
+                })
+        }
+    },[])
+
     return (
         <div className="px-10 py-4">
             <div className="flex items-center space-x-4">
@@ -127,6 +145,7 @@ const ReservationPage = () => {
                                 value={name.label}
                                 onChange={(e, value) => setName(value)}
                                 options={allUsers}
+                                isUser={userObject.user_role == 4}
                             />
                         </div>
                         <div className="col-span-1">
@@ -310,8 +329,10 @@ const ReservationPage = () => {
 export default ReservationPage;
 
 if (document.getElementById("ReservationPage")) {
+    const element = document.getElementById("ReservationPage")
+    const props = Object.assign({}, element.dataset)
     ReactDOM.render(
-        <ReservationPage />,
+        <ReservationPage {...props} />,
         document.getElementById("ReservationPage")
     );
 }

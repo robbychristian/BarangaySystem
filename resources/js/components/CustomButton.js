@@ -1,9 +1,10 @@
 import { Button, CircularProgress, Typography } from "@mui/material";
 import React from "react";
 
-const CustomButton = ({ variant, label, my, onClick, isFull, loading }) => {
+const CustomButton = ({ variant, label, my, onClick, isFull, loading, color }) => {
     return (
         <Button
+        color={color}
             variant={variant}
             onClick={onClick}
             style={{ marginBottom: my, marginTop: my }}
