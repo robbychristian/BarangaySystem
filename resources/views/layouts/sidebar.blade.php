@@ -44,18 +44,20 @@
                         <span class="flex-1 ml-3 whitespace-nowrap">Tanod Deployment</span>
                     </a>
                 </li>
-                <li>
-                    <a href="#"
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <span class="flex-1 ml-3 whitespace-nowrap">Data Analytics</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#"
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <span class="flex-1 ml-3 whitespace-nowrap">Audit Trail</span>
-                    </a>
-                </li>
+                @if (Auth::user()->user_role != 4)
+                    <li>
+                        <a href="#"
+                            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <span class="flex-1 ml-3 whitespace-nowrap">Data Analytics</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/audittrail"
+                            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <span class="flex-1 ml-3 whitespace-nowrap">Audit Trail</span>
+                        </a>
+                    </li>
+                @endif
 
             </ul>
         </div>

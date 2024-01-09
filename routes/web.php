@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Features\AnnouncementsController;
+use App\Http\Controllers\features\AuditTrailController;
 use App\Http\Controllers\Features\ReportsController;
 use App\Http\Controllers\Features\ServicesController;
 use App\Http\Controllers\Features\TanodDeployment;
@@ -49,3 +50,5 @@ Route::get('/usermanagement', [UserManagement::class, 'index']);
 Route::get('/usermanagement/adduser', [UserManagement::class, 'addUser']);
 
 Route::get('/tanoddeployment', [TanodDeployment::class, 'index']);
+
+Route::get('/audittrail', [AuditTrailController::class, 'index']);

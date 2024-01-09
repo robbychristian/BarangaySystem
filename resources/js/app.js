@@ -42,3 +42,5 @@ require("./page/UserManagement/AddUserPage");
 
 require("./page/TanodDeployment/TanodDeploymentList");
 require("./page/TanodDeployment/TanodDeploymentPage");
+
+require('./page/AuditTrail/AuditTrailPage')
