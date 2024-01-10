@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import CustomToast from "../../components/CustomToast";
 import CustomBackTitle from "../../navigation/CustomBackTitle";
-import { Button, Card } from "@mui/material";
+import { Button, Card, Typography } from "@mui/material";
 import { api } from "../../config/api";
 import CustomAutoComplete from "../../components/CustomAutoComplete";
 import CustomDateTimeInput from "../../components/CustomDateTimeInput";
@@ -18,6 +18,7 @@ import {
 } from "react-leaflet";
 import L from "leaflet";
 import { toast } from "react-toastify";
+import CircleIcon from '@mui/icons-material/Circle';
 
 function LocationMarker({ coords, setCoords, center }) {
     // const [position, setPosition] = useState(null);
@@ -161,6 +162,18 @@ const TanodDeploymentPage = (props) => {
                                 }
                                 multiline
                             />
+                        </div>
+                        <div className="col-span-1">
+                            <div className="grid grid-cols-2">
+                                <div className="col-span-1">
+                                    <CircleIcon style={{ color: 'red' }} />
+                                    <Typography variant="button" marginLeft={1} fontWeight={700}>New Area</Typography>
+                                </div>
+                                <div className="col-span-1">
+                                    <CircleIcon style={{ color: 'orange' }} />
+                                    <Typography variant="button" marginLeft={1} fontWeight={700}>Existing Area</Typography>
+                                </div>
+                            </div>
                         </div>
                         <div className="col-span-1 h-60 lg:h-80 w-full">
                             <MapContainer

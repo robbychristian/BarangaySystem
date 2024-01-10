@@ -19,4 +19,14 @@ class TanodDeployment extends Model implements Auditable
         'coordinates_lat',
         'coordinates_lng',
     ];
+
+    public function tanod1()
+    {
+        return $this->hasOne(User::class, 'id', 'tanod1_id');
+    }
+
+    public function tanod2()
+    {
+        return $this->hasOne(User::class, 'id', 'tanod2_id');
+    }
 }

@@ -50,5 +50,6 @@ Route::get('/usermanagement', [UserManagement::class, 'index']);
 Route::get('/usermanagement/adduser', [UserManagement::class, 'addUser']);
 
 Route::get('/tanoddeployment', [TanodDeployment::class, 'index']);
+Route::get('/tanoddeployment/map', [TanodDeployment::class, 'map']);
 
 Route::get('/audittrail', [AuditTrailController::class, 'index']);

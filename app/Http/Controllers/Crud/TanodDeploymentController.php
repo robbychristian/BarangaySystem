@@ -16,7 +16,7 @@ class TanodDeploymentController extends Controller
 
     public function getAllTanodDeployments()
     {
-        return TanodDeployment::all();
+        return TanodDeployment::with('tanod1')->with('tanod2')->get();
     }
 
     public function tanodDeployment(Request $request)
