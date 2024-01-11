@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Features\AnalyticsController;
 use App\Http\Controllers\Features\AnnouncementsController;
 use App\Http\Controllers\features\AuditTrailController;
 use App\Http\Controllers\Features\ReportsController;
@@ -53,3 +54,5 @@ Route::get('/tanoddeployment', [TanodDeployment::class, 'index']);
 Route::get('/tanoddeployment/map', [TanodDeployment::class, 'map']);
 
 Route::get('/audittrail', [AuditTrailController::class, 'index']);
+
+Route::get('/analytics', [AnalyticsController::class, 'index']);
