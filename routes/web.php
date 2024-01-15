@@ -56,3 +56,5 @@ Route::get('/tanoddeployment/map', [TanodDeployment::class, 'map']);
 Route::get('/audittrail', [AuditTrailController::class, 'index']);
 
 Route::get('/analytics', [AnalyticsController::class, 'index']);
+
+Route::get('/editprofile', [UserManagement::class, 'editProfile']);

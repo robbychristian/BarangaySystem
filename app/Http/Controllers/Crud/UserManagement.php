@@ -76,4 +76,33 @@ class UserManagement extends Controller
                 'is_verified' => true
             ]);
     }
+
+    public function changePassword(Request $request)
+    {
+        $newPassword = $request->newPassword;
+
+        if (Hash::check($request->currentPassword, Auth::user()->password)) {
+            User::where('id', $request->user_id)
+                ->update([
+                    'password' => Hash::make($newPassword)
+                ]);
+            return 'true';
+        } else {
+            return 'false';
+        }
+    }
+
+    public function editProfile(Request $request)
+    {
+        UserProfile::where('user_id', $request->user_id)
+            ->update([
+                'gender' => $request->gender,
+                'birthday' => $request->birthday,
+                'age' => $request->age,
+                'civil_status' => $request->civilStatus,
+                'phone_number' => $request->phoneNumber,
+                'address' => $request->address
+            ]);
+        return 'true';
+    }
 }

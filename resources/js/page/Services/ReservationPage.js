@@ -11,9 +11,11 @@ import { api } from "../../config/api";
 import { toast } from "react-toastify";
 import CustomToast from "../../components/CustomToast";
 import dayjs from "dayjs";
+import CustomSelectInput from "../../components/CustomSelectInput";
 
 const ReservationPage = ({user}) => {
     const userObject = JSON.parse(user)
+    const requestTypes = ['Barangay Equipment', 'Barangay Vehicle', 'Barangay Facilities']
     const [allUsers, setAllUsers] = useState([]);
     // PERSONAL INFORMATION
     const [name, setName] = useState(userObject.user_role == 4 ? {label: userObject.name, value: userObject.id} : {});
@@ -32,6 +34,7 @@ const ReservationPage = ({user}) => {
 
     // ADDITIONAL INFORMATION
     const [dateTimeInformation, setDateTimeInformation] = useState(moment());
+    const [dateTimeEnd, setDateTimeEnd] = useState(moment());
     const [purpose, setPurpose] = useState("");
 
     const handleReservationType = (e) => {
@@ -228,41 +231,15 @@ const ReservationPage = ({user}) => {
                     >
                         Reservation/Request
                     </Typography>
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 my-5">
-                        <div className="col-span-1 flex items-center">
-                            <Radio
-                                checked={
-                                    reservationType === "Barangay Equipment"
-                                }
-                                onChange={handleReservationType}
-                                value={"Barangay Equipment"}
+                    <div className="grid grid-cols-1 gap-4 my-5">
+                            <CustomSelectInput
+                                options={requestTypes}
+                                value={reservationType}
+                                label={"Gender"}
+                                onChange={(e) => {
+                                    setReservationType(e.target.value);
+                                }}
                             />
-                            <Typography variant="body1">
-                                Barangay Equipment
-                            </Typography>
-                        </div>
-                        <div className="col-span-1 flex items-center">
-                            <Radio
-                                checked={reservationType === "Barangay Vehicle"}
-                                onChange={handleReservationType}
-                                value={"Barangay Vehicle"}
-                            />
-                            <Typography variant="body1">
-                                Barangay Vehicle
-                            </Typography>
-                        </div>
-                        <div className="col-span-1 flex items-center">
-                            <Radio
-                                checked={
-                                    reservationType === "Barangay Facility"
-                                }
-                                onChange={handleReservationType}
-                                value={"Barangay Facility"}
-                            />
-                            <Typography variant="body1">
-                                Barangay Facility
-                            </Typography>
-                        </div>
                     </div>
                     <CustomTextInput
                         label={
@@ -298,10 +275,19 @@ const ReservationPage = ({user}) => {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 my-5">
                         <div className="col-span-1">
                             <CustomDateTimeInput
-                                label={`Date and Time`}
+                                label={`Date and Time Start`}
                                 value={dateTimeInformation}
                                 onChangeValue={(e) =>
                                     setDateTimeInformation(e.target.value)
+                                }
+                            />
+                        </div>
+                        <div className="col-span-1">
+                            <CustomDateTimeInput
+                                label={`Date and Time End`}
+                                value={dateTimeEnd}
+                                onChangeValue={(e) =>
+                                    setDateTimeEnd(e.target.value)
                                 }
                             />
                         </div>

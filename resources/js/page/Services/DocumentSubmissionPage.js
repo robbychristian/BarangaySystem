@@ -9,11 +9,17 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { api } from "../../config/api";
 import CustomAutoComplete from "../../components/CustomAutoComplete";
 import swal from "sweetalert";
+import CustomSelectInput from "../../components/CustomSelectInput";
 
 const DocumentSubmissionPage = ({user}) => {
+    const genders = ["Male", "Female"];
+    const documentTypes = ['Barangay Clearance', 'Cedula', 'Barangay Certificate', 'Business Clearance']
+    const civilStatuses = ["Single", "Married", "Widow/Widower"];
+
     const userObject = JSON.parse(user)
     // const [user, setUser] = useState(JSON.parse(props.user))
     const [allUsers, setAllUsers] = useState([]);
+    const [documentCode, setDocumentCode] = useState('DS-00')
     //PERSONAL INFO
     const [userValue, setUserValue] = useState(userObject.user_role == 4 ? {label: userObject.name, value: userObject.id} : {});
     const [birthdate, setBirthdate] = useState(dayjs());
@@ -104,6 +110,19 @@ const DocumentSubmissionPage = ({user}) => {
         }
     }, [])
 
+    useEffect(() => {
+        api.get('services/getlatestdocument')
+            .then((response) => {
+                if (response.data == "") {
+                    setDocumentCode('DS-001')
+                } else {
+                    setDocumentCode("DS-00"+response.data)
+                }
+            }).catch(err => {
+                console.log(err.response)
+            })
+    }, [])
+
     return (
         <div className="px-10 py-4">
             <div className="flex items-center space-x-4">
@@ -116,6 +135,17 @@ const DocumentSubmissionPage = ({user}) => {
                 <Typography variant="h4" fontWeight={"700"}>
                     Document Submission
                 </Typography>
+            </div>
+            <div className="py-5">
+                <CustomTextInput
+                    value={documentCode}
+                    label={`Document Code`}
+                    onChangeValue={(e) => {
+                        const input = e.target.value;
+                        e.target.value = "DS-00" + input.substring(5)
+                        setDocumentCode(e.target.value)
+                    }}
+                />
             </div>
             <div id="PersonalInformation" className="py-5">
                 <Card
@@ -163,19 +193,24 @@ const DocumentSubmissionPage = ({user}) => {
                             />
                         </div>
                         <div className="col-span-1">
-                            <CustomTextInput
-                                label={`Gender`}
+                            <CustomSelectInput
+                                options={genders}
                                 value={gender}
-                                onChangeValue={(e) => setGender(e.target.value)}
+                                label={"Gender"}
+                                onChange={(e) => {
+                                    setGender(e.target.value);
+                                }}
                             />
                         </div>
                         <div className="col-span-1">
-                            <CustomTextInput
-                                label={`Civil Status`}
+                            <CustomSelectInput
+                                options={civilStatuses}
                                 value={civilStatus}
-                                onChangeValue={(e) =>
-                                    setCivilStatus(e.target.value)
-                                }
+                                label={"Civil Status"}
+                                onChange={(e) => {
+                                    setCivilStatus(e.target.value);
+                                    console.log(e.target.value);
+                                }}
                             />
                         </div>
                     </div>
@@ -226,27 +261,19 @@ const DocumentSubmissionPage = ({user}) => {
                     >
                         Document Type
                     </Typography>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-5">
-                        <div className="col-span-1 flex items-center">
-                            <Radio
-                                checked={documentType === "Barangay Clearance"}
-                                onChange={handleOnDocumentType}
-                                value={"Barangay Clearance"}
+                    <div className="grid grid-cols-1 gap-4 my-5">
+                        <div className="col-span-1">
+                        <CustomSelectInput
+                                options={documentTypes}
+                                value={documentType}
+                                label={"Gender"}
+                                onChange={(e) => {
+                                    setDocumentType(e.target.value);
+                                }}
                             />
-                            <Typography variant="body1">
-                                Barangay Clearance
-                            </Typography>
-                        </div>
-                        <div className="col-span-1 flex items-center">
-                            <Radio
-                                checked={documentType === "Cedula"}
-                                onChange={handleOnDocumentType}
-                                value={"Cedula"}
-                            />
-                            <Typography variant="body1">Cedula</Typography>
                         </div>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-5">
+                    {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-5">
                         <div className="col-span-1 flex items-center">
                             <Radio
                                 checked={
@@ -269,7 +296,7 @@ const DocumentSubmissionPage = ({user}) => {
                                 Business Clearance
                             </Typography>
                         </div>
-                    </div>
+                    </div> */}
                 </Card>
             </div>
             <div id="DocumentType" className="py-5">
@@ -288,18 +315,8 @@ const DocumentSubmissionPage = ({user}) => {
                     >
                         Additional Information
                     </Typography>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 my-5">
-                        <div className="grid grid-rows-2 gap-4">
-                            <div className="row-span-1">
-                                <CustomTextInput
-                                    label={`Nature of Business`}
-                                    value={natureOfBusiness}
-                                    onChangeValue={(e) =>
-                                        setNatureOfBusiness(e.target.value)
-                                    }
-                                />
-                            </div>
-                            <div className="row-span-1">
+                    <div className="grid grid-cols-1 gap-4 my-5">
+                            <div className="col-span-1">
                                 <CustomTextInput
                                     label={`Purpose of Document`}
                                     value={purposeOfDocument}
@@ -308,13 +325,9 @@ const DocumentSubmissionPage = ({user}) => {
                                     }
                                 />
                             </div>
-                        </div>
-                        <div className="grid grid-rows-2 gap-4">
-                            <div className="row-span-1 flex justify-end"></div>
-                            <div className="row-span-1 flex justify-end">
+                            <div className="col-span-1">
                                 <CustomFileUpload handleFile={setFile} />
                             </div>
-                        </div>
                     </div>
                 </Card>
             </div>

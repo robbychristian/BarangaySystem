@@ -10,6 +10,7 @@ const CustomTextInput = ({
     multiline,
     isHalf,
     restrictions,
+    disabled = false
 }) => {
     const [error, setError] = useState(false)
     const firstUpdate = useRef(true) // to prevent render on first mount
@@ -44,6 +45,7 @@ const CustomTextInput = ({
             value={value}
             onChange={onChangeValue}
             type={type}
+            disabled={disabled}
             fullWidth={isHalf ? false : true}
             style={{
                 marginTop: my,

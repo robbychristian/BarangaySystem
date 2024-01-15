@@ -21,6 +21,7 @@ use App\Models\User;
 use Faker\Provider\ar_EG\Payment;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ServicesController extends Controller
 {
@@ -193,5 +194,10 @@ class ServicesController extends Controller
             'user_id' => $request->user_id,
             'schedule' => $request->schedule,
         ]);
+    }
+
+    public function getLatestDocument()
+    {
+        return DB::table('document_submissions')->latest()->pluck('id')->first();
     }
 }

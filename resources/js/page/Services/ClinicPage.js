@@ -8,12 +8,15 @@ import { api } from "../../config/api";
 import CustomDateTimeInput from "../../components/CustomDateTimeInput";
 import moment from "moment";
 import swal from "sweetalert";
+import CustomSelectInput from "../../components/CustomSelectInput";
 
 const ClinicPage = ({user}) => {
+    const appointmentTypes = ['Dental', 'Vaccine', 'Pregnancy', 'Medicine Pick Up']
     const userObject = JSON.parse(user)
     const [allUsers, setAllUsers] = useState([]);
     const [userValue, setUserValue] = useState(userObject.user_role == 4 ? {label: userObject.name, value: userObject.id} : {});
     const [schedule, setSchedule] = useState(moment());
+    const [appointmentType, setAppointmentType] = useState('');
 
     const handleSubmitSchedule = () => {
         api.post("services/scheduleclinic", {
@@ -84,6 +87,16 @@ const ClinicPage = ({user}) => {
                                 }}
                                 options={allUsers}
                                 isUser={userObject.user_role == 4}
+                            />
+                        </div>
+                        <div className="col-span-1">
+                        <CustomSelectInput
+                                options={appointmentTypes}
+                                value={appointmentType}
+                                label={"Appointment Type"}
+                                onChange={(e) => {
+                                    setAppointmentType(e.target.value);
+                                }}
                             />
                         </div>
                         <div className="col-span-1">

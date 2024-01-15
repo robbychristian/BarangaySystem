@@ -10,13 +10,21 @@ import CustomAutoComplete from "../../components/CustomAutoComplete";
 import moment from "moment";
 import CustomToast from "../../components/CustomToast";
 import { toast } from "react-toastify";
+import CustomSelectInput from "../../components/CustomSelectInput";
 
-const BlotterReportPage = ({user}) => {
-    const userObject = JSON.parse(user)
+const BlotterReportPage = ({ user }) => {
+    const genders = ["Male", "Female"];
+    const userObject = JSON.parse(user);
     const [incidentType, setIncidentType] = useState("");
 
+    const incidentTypes = ["Theft", "Armed Robbery", "Assault", "Drug Related"];
+
     //REPORTING PERSON
-    const [reportingName, setReportingName] = useState(userObject.user_role == 4 ? {label: userObject.name, value: userObject.id} : {});
+    const [reportingName, setReportingName] = useState(
+        userObject.user_role == 4
+            ? { label: userObject.name, value: userObject.id }
+            : {}
+    );
     const [dateTimeReport, setDateTimeReport] = useState(moment());
     const [reportingAge, setReportingAge] = useState("");
     const [reportingGender, setReportingGender] = useState("");
@@ -112,17 +120,19 @@ const BlotterReportPage = ({user}) => {
 
     useEffect(() => {
         if (userObject.user_role == 4) {
-            api.get(`getuseronlogin?user_id=${userObject.id}`).then((response => {
-                console.log(response.data)
-                setReportingAge(response.data.age)
-                setReportingGender(response.data.gender)
-                setReportingAddress(response.data.address)
-                setReportingPhoneNumber(response.data.phone_number)
-            })).catch(err => {
-                console.log(err.response)
-            })
+            api.get(`getuseronlogin?user_id=${userObject.id}`)
+                .then((response) => {
+                    console.log(response.data);
+                    setReportingAge(response.data.age);
+                    setReportingGender(response.data.gender);
+                    setReportingAddress(response.data.address);
+                    setReportingPhoneNumber(response.data.phone_number);
+                })
+                .catch((err) => {
+                    console.log(err.response);
+                });
         }
-    }, [])
+    }, []);
 
     return (
         <div className="px-10 py-4">
@@ -139,11 +149,13 @@ const BlotterReportPage = ({user}) => {
                 </Typography>
             </div>
             <div id="IncidentType" className="py-5">
-                <CustomTextInput
-                    label={`Incident Type`}
+                <CustomSelectInput
+                    options={incidentTypes}
                     value={incidentType}
-                    onChangeValue={(e) => setIncidentType(e.target.value)}
-                    isHalf
+                    label={"Incident Type"}
+                    onChange={(e) => {
+                        setIncidentType(e.target.value);
+                    }}
                 />
             </div>
             <div id="ReportingPerson" className="py-5">
@@ -197,12 +209,13 @@ const BlotterReportPage = ({user}) => {
                                     />
                                 </div>
                                 <div className="col-span-1">
-                                    <CustomTextInput
-                                        label={`Gender`}
+                                    <CustomSelectInput
+                                        options={genders}
                                         value={reportingGender}
-                                        onChangeValue={(e) =>
-                                            setReportingGender(e.target.value)
-                                        }
+                                        label={"Gender"}
+                                        onChange={(e) => {
+                                            setGender(e.target.value);
+                                        }}
                                     />
                                 </div>
                             </div>
@@ -275,7 +288,7 @@ const BlotterReportPage = ({user}) => {
                             />
                         </div>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-5">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 my-5">
                         <div className="col-span-1">
                             <CustomTextInput
                                 label={`Age`}
@@ -286,21 +299,13 @@ const BlotterReportPage = ({user}) => {
                             />
                         </div>
                         <div className="col-span-1">
-                            <CustomTextInput
-                                label={`Gender`}
+                            <CustomSelectInput
+                                options={genders}
                                 value={suspectGender}
-                                onChangeValue={(e) =>
-                                    setSuspectGender(e.target.value)
-                                }
-                            />
-                        </div>
-                        <div className="col-span-1">
-                            <CustomTextInput
-                                label={`Occupation`}
-                                value={suspectOccupation}
-                                onChangeValue={(e) =>
-                                    setSuspectOccupation(e.target.value)
-                                }
+                                label={"Gender"}
+                                onChange={(e) => {
+                                    setGender(e.target.value);
+                                }}
                             />
                         </div>
                     </div>
@@ -353,7 +358,7 @@ const BlotterReportPage = ({user}) => {
                             />
                         </div>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-5">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 my-5">
                         <div className="col-span-1">
                             <CustomTextInput
                                 label={`Age`}
@@ -364,21 +369,13 @@ const BlotterReportPage = ({user}) => {
                             />
                         </div>
                         <div className="col-span-1">
-                            <CustomTextInput
-                                label={`Gender`}
+                            <CustomSelectInput
+                                options={genders}
                                 value={victimGender}
-                                onChangeValue={(e) =>
-                                    setVictimGender(e.target.value)
-                                }
-                            />
-                        </div>
-                        <div className="col-span-1">
-                            <CustomTextInput
-                                label={`Occupation`}
-                                value={victimOccupation}
-                                onChangeValue={(e) =>
-                                    setVictimOccupation(e.target.value)
-                                }
+                                label={"Gender"}
+                                onChange={(e) => {
+                                    setGender(e.target.value);
+                                }}
                             />
                         </div>
                     </div>
@@ -471,8 +468,8 @@ const BlotterReportPage = ({user}) => {
 export default BlotterReportPage;
 
 if (document.getElementById("BlotterReportPage")) {
-    const element = document.getElementById("BlotterReportPage")
-    const props = Object.assign({}, element.dataset)
+    const element = document.getElementById("BlotterReportPage");
+    const props = Object.assign({}, element.dataset);
     ReactDOM.render(
         <BlotterReportPage {...props} />,
         document.getElementById("BlotterReportPage")

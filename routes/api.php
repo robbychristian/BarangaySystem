@@ -27,6 +27,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/services/getallresidents', [ServicesController::class, 'getAllResidents']);
 Route::get('/services/getalldocuments', [ServicesController::class, 'getAllDocuments']);
+Route::get('/services/getlatestdocument', [ServicesController::class, 'getLatestDocument']);
 Route::post('/services/createdocument', [ServicesController::class, 'addDocument']);
 Route::post('/services/createblotter', [ServicesController::class, 'addBlotterReport']);
 Route::post('/services/createreservation', [ServicesController::class, 'addReservation']);
@@ -52,6 +53,8 @@ Route::post('/usermanagement/createuser', [UserManagement::class, 'addUser']);
 Route::post('/usermanagement/promoteuser', [UserManagement::class, 'promoteUser']);
 Route::post('/usermanagement/demoteuser', [UserManagement::class, 'demoteUser']);
 Route::post('/usermanagement/verifyuser', [UserManagement::class, 'verifyUser']);
+Route::post('/usermanagement/changepassword', [UserManagement::class, 'changePassword']);
+Route::post('/usermanagement/editprofile', [UserManagement::class, 'editProfile']);
 
 Route::get('/tanoddeployment/getallstaff', [TanodDeploymentController::class, 'getAllStaff']);
 Route::get('/tanoddeployment/getalltanoddeployments', [TanodDeploymentController::class, 'getAllTanodDeployments']);
