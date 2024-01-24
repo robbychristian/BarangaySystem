@@ -15,5 +15,6 @@ class ReservationFormRequest extends Model implements Auditable
         'reservation_id',
         'request_type',
         'request_item',
+        'request_quantity',
     ];
 }

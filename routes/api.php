@@ -28,6 +28,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/services/getallresidents', [ServicesController::class, 'getAllResidents']);
 Route::get('/services/getalldocuments', [ServicesController::class, 'getAllDocuments']);
 Route::get('/services/getlatestdocument', [ServicesController::class, 'getLatestDocument']);
+Route::get('/services/getlatestblotterreport', [ServicesController::class, 'getLatestBlotterReport']);
+Route::get('/services/getlatestreservation', [ServicesController::class, 'getLatestReservation']);
 Route::post('/services/createdocument', [ServicesController::class, 'addDocument']);
 Route::post('/services/createblotter', [ServicesController::class, 'addBlotterReport']);
 Route::post('/services/createreservation', [ServicesController::class, 'addReservation']);
@@ -38,6 +40,7 @@ Route::post('/services/scheduleclinic', [ServicesController::class, 'scheduleCli
 
 Route::get("/announcements/getallannouncements", [AnnouncementsController::class, 'getAllAnnouncements']);
 Route::get("/announcements/getlastestannouncement", [AnnouncementsController::class, 'getLatestAnnouncement']);
+Route::get("/announcements/getlatestnews", [AnnouncementsController::class, 'getLatestNews']);
 Route::get("/announcements/getallnews", [AnnouncementsController::class, 'getAllNews']);
 Route::get("/announcements/getallevents", [AnnouncementsController::class, 'getAllEvents']);
 Route::get("/announcements/getpastevents", [AnnouncementsController::class, 'getPastEvents']);

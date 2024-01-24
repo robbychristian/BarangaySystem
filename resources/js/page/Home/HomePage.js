@@ -13,6 +13,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { api } from "../../config/api";
+import CustomNewsCard from "../../components/CustomNewsCard";
 
 ChartJS.register(
     CategoryScale,
@@ -24,6 +25,7 @@ ChartJS.register(
 );
 const HomePage = () => {
     const [announcement, setAnnouncement] = useState({});
+    const [news, setNews] = useState({});
     const labels = ["January", "February", "March", "April", "May", "June"];
     const sampleData = {
         labels,
@@ -44,6 +46,10 @@ const HomePage = () => {
             .catch((err) => {
                 console.log(err.response);
             });
+        api.get("announcements/getlatestnews").then((response) => {
+            console.log(response.data)
+            setNews(response.data);
+        });
     }, []);
 
     return (
@@ -62,7 +68,7 @@ const HomePage = () => {
                     fontWeight={`700`}
                     textAlign={`center`}
                 >
-                    Announcements
+                    Latest Announcements
                 </Typography>
                 <Typography variant="h6" fontWeight={"bold"}>
                     {announcement && announcement.announcement_title}
@@ -72,42 +78,30 @@ const HomePage = () => {
                 </Typography>
                 <div className="flex justify-center items-center"></div>
             </Card>
-            {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div className="col-span-1">
-                    <Bar
-                        options={{
-                            responsive: true,
-                            plugins: {
-                                legend: {
-                                    position: "top",
-                                },
-                                title: {
-                                    display: true,
-                                    text: "Bar Chart",
-                                },
-                            },
-                        }}
-                        data={sampleData}
-                    />
-                </div>
-                <div className="col-span-1">
-                    <Bar
-                        options={{
-                            responsive: true,
-                            plugins: {
-                                legend: {
-                                    position: "top",
-                                },
-                                title: {
-                                    display: true,
-                                    text: "Bar Chart",
-                                },
-                            },
-                        }}
-                        data={sampleData}
-                    />
-                </div>
-            </div> */}
+            <Card
+                style={{
+                    paddingLeft: 15,
+                    paddingRight: 15,
+                    paddingTop: 8,
+                    paddingBottom: 8,
+                    marginTop: 20
+                }}
+                variant="outlined"
+            >
+                <Typography
+                    variant="h4"
+                    fontWeight={`700`}
+                    textAlign={`center`}
+                >
+                    Latest News
+                </Typography>
+                <CustomNewsCard
+                hasBorder={false}
+                    title={news.news_title}
+                    description={news.news_description}
+                    // image={require("../../../../../public/image/news/News Title.tv-patrol_2022-01-17_16-37-09.jpg")}
+                />
+            </Card>
         </div>
     );
 };

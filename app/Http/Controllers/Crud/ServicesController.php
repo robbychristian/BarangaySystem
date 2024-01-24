@@ -137,7 +137,8 @@ class ServicesController extends Controller
         ReservationFormRequest::create([
             'reservation_id' => $reservation->id,
             'request_type' => $request->request_type,
-            'request_item' => $request->request_item
+            'request_item' => $request->request_item,
+            'request_quantity' => $request->request_item,
         ]);
 
         ReservationFormAdditionalInfo::create([
@@ -199,5 +200,13 @@ class ServicesController extends Controller
     public function getLatestDocument()
     {
         return DB::table('document_submissions')->latest()->pluck('id')->first();
+    }
+    public function getLatestBlotterReport()
+    {
+        return DB::table('blotter_reports')->latest()->pluck('id')->first();
+    }
+    public function getLatestReservation()
+    {
+        return DB::table('reservation_forms')->latest()->pluck('id')->first();
     }
 }

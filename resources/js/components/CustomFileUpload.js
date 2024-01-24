@@ -35,6 +35,7 @@ const CustomFileUpload = ({ handleFile, my }) => {
                 className="hidden"
                 ref={hiddenFileInput}
                 onChange={handleChange}
+                accept="image/png, image/jpeg"
             ></input>
         </Button>
     );

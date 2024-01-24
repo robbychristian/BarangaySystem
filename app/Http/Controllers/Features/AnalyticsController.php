@@ -41,7 +41,6 @@ class AnalyticsController extends Controller
         array_push($totalPerType, strval($blotterReports));
         array_push($totalPerType, strval($reservations));
         array_push($totalPerType, strval($clinicSchedules));
-        dd($totalPerType);
 
         return view('features.Analytics.Analytics', compact('totalUsersPerRole', 'type', 'totalPerType'));
     }

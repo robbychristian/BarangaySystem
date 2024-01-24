@@ -16,6 +16,17 @@ const BlotterReportPage = ({ user }) => {
     const genders = ["Male", "Female"];
     const userObject = JSON.parse(user);
     const [incidentType, setIncidentType] = useState("");
+    const [documentCode, setDocumentCode] = useState("");
+
+    useEffect(() => {
+        api.get("services/getlatestblotterreport").then((response) => {
+            if (response.data == "") {
+                setDocumentCode("BR-001");
+            } else {
+                setDocumentCode("BR-00" + (Number(response.data) + 1));
+            }
+        });
+    }, []);
 
     const incidentTypes = ["Theft", "Armed Robbery", "Assault", "Drug Related"];
 
@@ -37,6 +48,7 @@ const BlotterReportPage = ({ user }) => {
     const [suspectRelationToVictim, setSuspectRelationToVictim] = useState("");
     const [suspectAge, setSuspectAge] = useState("");
     const [suspectGender, setSuspectGender] = useState("");
+    const [suspectDescription, setSuspectDescription] = useState("");
     const [suspectOccupation, setSuspectOccupation] = useState("");
     const [suspectAddress, setSuspectAddress] = useState("");
 
@@ -148,15 +160,29 @@ const BlotterReportPage = ({ user }) => {
                     Blotter Report
                 </Typography>
             </div>
-            <div id="IncidentType" className="py-5">
-                <CustomSelectInput
-                    options={incidentTypes}
-                    value={incidentType}
-                    label={"Incident Type"}
-                    onChange={(e) => {
-                        setIncidentType(e.target.value);
-                    }}
-                />
+            <div
+                id="IncidentType"
+                className="py-5 grid grid-cols-1 lg:grid-cols-2 gap-4"
+            >
+                <div className="col-span-1">
+                    <CustomTextInput
+                        label={"Document Code"}
+                        value={documentCode}
+                        onChangeValue={(e) => {
+                            console.log(e.target.value);
+                        }}
+                    />
+                </div>
+                <div className="col-span-1">
+                    <CustomSelectInput
+                        options={incidentTypes}
+                        value={incidentType}
+                        label={"Incident Type"}
+                        onChange={(e) => {
+                            setIncidentType(e.target.value);
+                        }}
+                    />
+                </div>
             </div>
             <div id="ReportingPerson" className="py-5">
                 <Card
@@ -214,7 +240,7 @@ const BlotterReportPage = ({ user }) => {
                                         value={reportingGender}
                                         label={"Gender"}
                                         onChange={(e) => {
-                                            setGender(e.target.value);
+                                            setReportingGender(e.target.value);
                                         }}
                                     />
                                 </div>
@@ -304,7 +330,7 @@ const BlotterReportPage = ({ user }) => {
                                 value={suspectGender}
                                 label={"Gender"}
                                 onChange={(e) => {
-                                    setGender(e.target.value);
+                                    setSuspectGender(e.target.value);
                                 }}
                             />
                         </div>
@@ -316,6 +342,17 @@ const BlotterReportPage = ({ user }) => {
                                 value={suspectAddress}
                                 onChangeValue={(e) =>
                                     setSuspectAddress(e.target.value)
+                                }
+                            />
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-1 my-5">
+                        <div className="col-span-1">
+                            <CustomTextInput
+                                label={`Suspect Description`}
+                                value={suspectDescription}
+                                onChangeValue={(e) =>
+                                    setSuspectDescription(e.target.value)
                                 }
                             />
                         </div>
@@ -374,7 +411,7 @@ const BlotterReportPage = ({ user }) => {
                                 value={victimGender}
                                 label={"Gender"}
                                 onChange={(e) => {
-                                    setGender(e.target.value);
+                                    setVictimGender(e.target.value);
                                 }}
                             />
                         </div>

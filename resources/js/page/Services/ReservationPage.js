@@ -13,12 +13,31 @@ import CustomToast from "../../components/CustomToast";
 import dayjs from "dayjs";
 import CustomSelectInput from "../../components/CustomSelectInput";
 
-const ReservationPage = ({user}) => {
-    const userObject = JSON.parse(user)
-    const requestTypes = ['Barangay Equipment', 'Barangay Vehicle', 'Barangay Facilities']
+const ReservationPage = ({ user }) => {
+    const genders = ["Male", "Female"];
+    const documentTypes = [
+        "Barangay Clearance",
+        "Cedula",
+        "Barangay Certificate",
+        "Business Clearance",
+    ];
+    const civilStatuses = ["Single", "Married", "Widow/Widower"];
+
+    const userObject = JSON.parse(user);
+    const requestTypes = [
+        "Barangay Equipment",
+        "Barangay Vehicle",
+        "Barangay Facilities",
+    ];
     const [allUsers, setAllUsers] = useState([]);
+    const [documentCode, setDocumentCode] = useState("");
+    const [quantity, setQuantity] = useState("");
     // PERSONAL INFORMATION
-    const [name, setName] = useState(userObject.user_role == 4 ? {label: userObject.name, value: userObject.id} : {});
+    const [name, setName] = useState(
+        userObject.user_role == 4
+            ? { label: userObject.name, value: userObject.id }
+            : {}
+    );
     const [birthdate, setBirthdate] = useState(moment());
     const [age, setAge] = useState("");
     const [gender, setGender] = useState("");
@@ -40,6 +59,20 @@ const ReservationPage = ({user}) => {
     const handleReservationType = (e) => {
         setReservationType(e.target.value);
     };
+
+    useEffect(() => {
+        api.get("services/getlatestreservation")
+            .then((response) => {
+                if (response.data == "") {
+                    setDocumentCode("RF-001");
+                } else {
+                    setDocumentCode("RF-00" + (Number(response.data) + 1));
+                }
+            })
+            .catch((err) => {
+                console.log(err.response);
+            });
+    }, []);
 
     const handleSubmitReservation = () => {
         api.post("services/createreservation", {
@@ -92,19 +125,20 @@ const ReservationPage = ({user}) => {
 
     useEffect(() => {
         if (userObject.user_role == 4) {
-            api.get(`getuseronlogin?user_id=${userObject.id}`)
-                .then(response => {
-                    console.log(response.data)
-                    setAge(response.data.age)
-                    setBirthdate(dayjs(response.data.birthday))
-                    setGender(response.data.gender)
-                    setCivilStatus(response.data.civil_status)
-                    setAddress(response.data.address)
-                    setEmail(response.data.owned_by.email)
-                    setPhoneNumber(response.data.phone_number)
-                })
+            api.get(`getuseronlogin?user_id=${userObject.id}`).then(
+                (response) => {
+                    console.log(response.data);
+                    setAge(response.data.age);
+                    setBirthdate(dayjs(response.data.birthday));
+                    setGender(response.data.gender);
+                    setCivilStatus(response.data.civil_status);
+                    setAddress(response.data.address);
+                    setEmail(response.data.owned_by.email);
+                    setPhoneNumber(response.data.phone_number);
+                }
+            );
         }
-    },[])
+    }, []);
 
     return (
         <div className="px-10 py-4">
@@ -121,6 +155,17 @@ const ReservationPage = ({user}) => {
                 </Typography>
             </div>
             <div id="PersonalInformation" className="py-5">
+                <div id="IncidentType" className="py-5">
+                    <div className="col-span-1">
+                        <CustomTextInput
+                            label={"Document Code"}
+                            value={documentCode}
+                            onChangeValue={(e) => {
+                                console.log(e.target.value);
+                            }}
+                        />
+                    </div>
+                </div>
                 <Card
                     sx={{
                         paddingTop: 3,
@@ -168,19 +213,24 @@ const ReservationPage = ({user}) => {
                             />
                         </div>
                         <div className="col-span-1">
-                            <CustomTextInput
-                                label={`Gender`}
+                            <CustomSelectInput
+                                options={genders}
                                 value={gender}
-                                onChangeValue={(e) => setGender(e.target.value)}
+                                label={"Gender"}
+                                onChange={(e) => {
+                                    setGender(e.target.value);
+                                }}
                             />
                         </div>
                         <div className="col-span-1">
-                            <CustomTextInput
-                                label={`Civil Status`}
+                            <CustomSelectInput
+                                options={civilStatuses}
                                 value={civilStatus}
-                                onChangeValue={(e) =>
-                                    setCivilStatus(e.target.value)
-                                }
+                                label={"Civil Status"}
+                                onChange={(e) => {
+                                    setCivilStatus(e.target.value);
+                                    console.log(e.target.value);
+                                }}
                             />
                         </div>
                     </div>
@@ -232,6 +282,7 @@ const ReservationPage = ({user}) => {
                         Reservation/Request
                     </Typography>
                     <div className="grid grid-cols-1 gap-4 my-5">
+                        <div className="col-span-1">
                             <CustomSelectInput
                                 options={requestTypes}
                                 value={reservationType}
@@ -240,6 +291,16 @@ const ReservationPage = ({user}) => {
                                     setReservationType(e.target.value);
                                 }}
                             />
+                        </div>
+                        <div className="col-span-1">
+                            <CustomTextInput
+                                label={"Quantity"}
+                                value={quantity}
+                                onChangeValue={(e) =>
+                                    setQuantity(e.target.value)
+                                }
+                            />
+                        </div>
                     </div>
                     <CustomTextInput
                         label={
@@ -315,8 +376,8 @@ const ReservationPage = ({user}) => {
 export default ReservationPage;
 
 if (document.getElementById("ReservationPage")) {
-    const element = document.getElementById("ReservationPage")
-    const props = Object.assign({}, element.dataset)
+    const element = document.getElementById("ReservationPage");
+    const props = Object.assign({}, element.dataset);
     ReactDOM.render(
         <ReservationPage {...props} />,
         document.getElementById("ReservationPage")

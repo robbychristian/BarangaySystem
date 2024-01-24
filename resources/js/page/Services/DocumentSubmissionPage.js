@@ -116,7 +116,7 @@ const DocumentSubmissionPage = ({user}) => {
                 if (response.data == "") {
                     setDocumentCode('DS-001')
                 } else {
-                    setDocumentCode("DS-00"+response.data)
+                    setDocumentCode("DS-00"+(Number(response.data)+1))
                 }
             }).catch(err => {
                 console.log(err.response)

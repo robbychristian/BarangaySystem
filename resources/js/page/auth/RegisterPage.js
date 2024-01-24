@@ -12,8 +12,12 @@ import InfoIcon from "@mui/icons-material/Info";
 import CustomDatePicker from "../../components/CustomDatePicker";
 import dayjs from "dayjs";
 import moment from "moment/moment";
+import CustomSelectInput from "../../components/CustomSelectInput";
 
 const RegisterPage = () => {
+    const genders = ["Male", "Female"];
+    const civilStatuses = ["Single", "Married", "Widow/Widower"];
+
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
     const [name, setName] = useState("");
@@ -222,23 +226,21 @@ const RegisterPage = () => {
                                 my={5}
                                 restrictions={"numeric"}
                             />
-                            <CustomTextInput
-                                label={`Gender`}
+                            <CustomSelectInput
+                                options={genders}
                                 value={gender}
-                                onChangeValue={(e) =>
-                                    setGender(e.target.value)
-                                }
-                                my={5}
-                                restrictions={"alphabet"}
+                                label={"Gender"}
+                                onChange={(e) => {
+                                    setGender(e.target.value);
+                                }}
                             />
-                            <CustomTextInput
-                                label={`Civil Status`}
+                            <CustomSelectInput
+                                options={civilStatuses}
                                 value={civilStatus}
-                                onChangeValue={(e) =>
-                                    setCivilStatus(e.target.value)
-                                }
-                                my={5}
-                                restrictions={"alphabet"}
+                                label={"Civil Status"}
+                                onChange={(e) => {
+                                    setCivilStatus(e.target.value);
+                                }}
                             />
                             <CustomTextInput
                                 label={`Address`}

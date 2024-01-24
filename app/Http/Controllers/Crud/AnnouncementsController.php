@@ -28,6 +28,11 @@ class AnnouncementsController extends Controller
     {
         return BarangayNews::all();
     }
+    
+    public function getLatestNews()
+    {
+        return BarangayNews::latest()->first();
+    }
 
     public function getAllEvents()
     {
@@ -57,19 +62,23 @@ class AnnouncementsController extends Controller
 
     public function addAnnouncement(Request $request)
     {
-        // Announcements::create([
-        //     'user_id' => $request->user_id,
-        //     'announcement_title' => $request->announcement_title,
-        //     'announcement_description' => $request->announcement_description,
-        // ]);
+        $announcement = Announcements::create([
+            'user_id' => $request->user_id,
+            'announcement_title' => $request->announcement_title,
+            'announcement_description' => $request->announcement_description,
+        ]);
         
         $allUsers = User::all()->pluck('email');
 
-        foreach ($allUsers as $user) {
-            Mail::to($user)->send(new AnnouncementEmail());
-        }
+        // foreach($allUsers as $user) {
+        //     Mail::to($user->email)->send(new AnnouncementEmail());
+        // }
 
-        return $allUsers;
+        // return $allUsers;
+        
+        Mail::to($allUsers)->send(new AnnouncementEmail($announcement));
+
+        // return $allUsers;
     }
 
     public function addNews(Request $request)
